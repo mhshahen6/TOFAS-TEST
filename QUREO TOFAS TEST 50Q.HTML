@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>الاختبار الشامل لشهادة توفاس - م/ محمد محمود شاهين</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a2a6c; --secondary: #b21f1f; --accent: #fdbb2d;
+            --success: #27ae60; --danger: #c0392b; --bg-odd: #f0f4f8; --bg-even: #fdfaf5;
+            --ink: #222; --muted: #6c757d;
+        }
+        
+        /* خلفية ديناميكية للصفحة */
+        body { 
+            margin:0; 
+            padding:0; 
+            font-family:'Cairo',sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
+            display:flex; 
+            flex-direction:column; 
+            align-items:center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* تأثيرات زخرفية إضافية */
+        .bg-particle {
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* تحسين تصميم الصفحات */
+        .page {
+            width:210mm; 
+            min-height:297mm; 
+            padding:15mm; 
+            margin:10mm 0; 
+            background: rgba(255, 255, 255, 0.95);
+            position:relative; 
+            overflow:hidden; 
+            display:flex; 
+            flex-direction:column; 
+            page-break-after:always;
+            box-shadow:0 8px 30px rgba(0,0,0,0.35); 
+            border:2px solid #e5e7eb;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .page:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .page:nth-child(odd){
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,244,248,0.95) 100%);
+        }
+        .page:nth-child(even){
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(253,250,245,0.95) 100%);
+        }
+
+        .header{
+            text-align:center;
+            margin-bottom:30px;
+            position:relative;
+            z-index:1;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .header h1{
+            color:var(--primary);
+            margin:0;
+            font-weight:800;
+            font-size: 2.2rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .header p{
+            color:var(--secondary);
+            font-weight:700;
+            margin:0;
+            font-size: 1.1rem;
+        }
+
+        /* تحسين العناصر الزخرفية */
+        .decoration{
+            position:absolute;
+            opacity:0.15;
+            z-index:0;
+            pointer-events:none;
+            filter: blur(1px);
+        }
+        .circle{
+            width:420px;
+            height:420px;
+            border-radius:50%;
+            background: radial-gradient(circle at 30% 30%, #1a2a6c 0%, #3a4a9c 60%, transparent 65%);
+            top:-210px;
+            right:-210px;
+            animation: rotateCircle 40s linear infinite;
+        }
+        .square{
+            width:320px;
+            height:320px;
+            background: conic-gradient(from 45deg, #b21f1f, #d13b3b, #b21f1f);
+            bottom:-160px;
+            left:-160px;
+            transform:rotate(45deg);
+            animation: rotateSquare 50s linear infinite;
+        }
+        
+        @keyframes rotateCircle{
+            from{ transform:rotate(0deg); }
+            to{ transform:rotate(360deg); }
+        }
+        
+        @keyframes rotateSquare{
+            from{ transform:rotate(45deg); }
+            to{ transform:rotate(405deg); }
+        }
+
+        /* تحسين بطاقات الأسئلة */
+        .q-card{
+            background:#fff;
+            border-radius:16px;
+            padding:20px;
+            margin-bottom:18px;
+            box-shadow:0 6px 16px rgba(0,0,0,0.08);
+            position:relative;
+            z-index:1;
+            border-right:8px solid var(--primary);
+            opacity:0;
+            transform:translateY(20px);
+            animation:fadeInUp 0.8s ease forwards;
+            transition: all 0.3s ease;
+        }
+        
+        .q-card:nth-child(2n) {
+            border-right-color: var(--secondary);
+        }
+        
+        .q-card:nth-child(3n) {
+            border-right-color: var(--accent);
+        }
+        
+        .q-card:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            transform: translateY(-3px);
+        }
+        
+        @keyframes fadeInUp{
+            to{ opacity:1; transform:translateY(0); }
+        }
+
+        .q-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:12px;
+            border-bottom:2px dashed #eef;
+            padding-bottom:10px;
+        }
+        .q-num{
+            background: var(--primary);
+            color:white;
+            padding:8px 18px;
+            border-radius:20px;
+            font-weight:bold;
+            font-size: 1.1rem;
+            box-shadow: 0 3px 8px rgba(26, 42, 108, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .q-card:hover .q-num {
+            transform: scale(1.05);
+        }
+        
+        .q-text{
+            font-size:1.2rem;
+            font-weight:700;
+            color:var(--ink);
+            margin:0;
+            line-height:1.7;
+            padding: 5px 0;
+        }
+
+        .code-box{
+            direction:ltr;
+            text-align:left;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color:#cbd5e1;
+            padding:14px 16px;
+            border-radius:12px;
+            font-family:'Roboto Mono',monospace;
+            font-size:0.95rem;
+            margin:14px 0;
+            border-left:5px solid var(--accent);
+            white-space:pre-wrap;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-box::before {
+            content: "JS";
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-weight: bold;
+            opacity: 0.7;
+        }
+
+        .options{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:10px;
+            margin-top:10px;
+        }
+        input[type="radio"]{
+            display:none;
+        }
+        .opt-label{
+            display:flex;
+            align-items:center;
+            padding:11px 14px;
+            background:#f8fafc;
+            border:2px solid #e2e8f0;
+            border-radius:12px;
+            cursor:pointer;
+            transition:all 0.3s;
+            font-size:1rem;
+            color:#0f172a;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .opt-label::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .opt-label:hover::before {
+            left: 100%;
+        }
+        
+        .opt-label:hover{
+            background:#eef2f3;
+            border-color:var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+        }
+
+        input.correct:checked+label{
+            background:#d4edda !important;
+            border-color:var(--success) !important;
+            color:#155724;
+            font-weight:bold;
+            animation: pulse 0.5s ease;
+        }
+        
+        input.wrong:checked+label{
+            background:#f8d7da !important;
+            border-color:var(--danger) !important;
+            color:#721c24;
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* تحسين التلميح */
+        .hint{
+            margin-top:15px;
+            font-size:0.95rem;
+            color:var(--muted);
+            cursor:pointer;
+            font-style:italic;
+            padding: 10px 15px;
+            background: rgba(253, 216, 53, 0.1);
+            border-radius: 10px;
+            border-right: 3px solid var(--accent);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .hint:hover {
+            background: rgba(253, 216, 53, 0.2);
+            transform: translateX(-5px);
+        }
+        
+        .hint i {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        
+        .hint-val{
+            display:none;
+            color:var(--success);
+            font-weight:800;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(39, 174, 96, 0.1);
+            margin-top: 8px;
+            animation: fadeIn 0.5s ease;
+            border-right: 3px solid var(--success);
+            width: 100%;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            width: 100%;
+        }
+        
+        /* مؤشر تقدم */
+        .progress-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-weight: bold;
+            color: var(--primary);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* تحسين الطباعة */
+        @media print {
+            body {
+                background: white !important;
+            }
+            
+            .page {
+                box-shadow: none;
+                margin: 0;
+                page-break-inside: avoid;
+            }
+            
+            .hint {
+                display: none;
+            }
+            
+            .progress-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- مؤشر التقدم -->
+    <div class="progress-indicator">
+        <i class="fas fa-clipboard-list"></i> الاختبار الشامل - 50 سؤال
+    </div>
+
+    <!-- الصفحة 1 -->
+    <div class="page">
+        <div class="decoration circle"></div>
+        <div class="header">
+            <h1>امتحان توفاس الشامل (TOPAS)</h1>
+            <p>اختبار شامل في مفاهيم البرمجة وجافا سكريبت</p>
+        </div>
+
+        <!-- سؤال 1 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 1</span></div>
+            <p class="q-text">ما خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let score = 75;
+if (score == 100) { console.log("Perfect"); }
+else if (score >= 80) { console.log("So close"); }
+else if (score >= 60) { console.log("Pass"); }</div>
+            <div class="options">
+                <input type="radio" name="q1" id="q1a" class="wrong"><label class="opt-label" for="q1a">Perfect</label>
+                <input type="radio" name="q1" id="q1b" class="wrong"><label class="opt-label" for="q1b">So close</label>
+                <input type="radio" name="q1" id="q1c" class="correct"><label class="opt-label" for="q1c">Pass</label>
+                <input type="radio" name="q1" id="q1d" class="wrong"><label class="opt-label" for="q1d">لا يوجد اختيار صحيح</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">Pass — لأن 75 أكبر من 60 وأقل من 80</span>
+            </div>
+        </div>
+
+        <!-- سؤال 2 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 2</span></div>
+            <p class="q-text">أي من البرامج الأتية يقوم بتحويل القيمة العددية 100 إلى نص؟</p>
+            <div class="options">
+                <input type="radio" name="q2" id="q2a" class="correct"><label class="opt-label" for="q2a">console.log(String(100));</label>
+                <input type="radio" name="q2" id="q2b" class="wrong"><label class="opt-label" for="q2b">console.log(Number 100);</label>
+                <input type="radio" name="q2" id="q2c" class="wrong"><label class="opt-label" for="q2c">console.log(typeof 100);</label>
+                <input type="radio" name="q2" id="q2d" class="wrong"><label class="opt-label" for="q2d">console.log(typeof "100");</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">String(100) — الدالة String تُحوّل الرقم إلى نص.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 3 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 3</span></div>
+            <p class="q-text">أي من البرامج التالية يجعل الكمبيوتر يحدد نوع البيانات 500 ويطبعه في وحدة التحكم؟</p>
+            <div class="options">
+                <input type="radio" name="q3" id="q3a" class="correct"><label class="opt-label" for="q3a">console.log(typeof 100);</label>
+                <input type="radio" name="q3" id="q3b" class="wrong"><label class="opt-label" for="q3b">typeof 100</label>
+                <input type="radio" name="q3" id="q3c" class="wrong"><label class="opt-label" for="q3c">console.log("typeof 100")</label>
+                <input type="radio" name="q3" id="q3d" class="wrong"><label class="opt-label" for="q3d">console.log(100)</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">console.log(typeof 100) — typeof يعطي النوع، وconsole.log يطبعه.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 4 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 4</span><div class="q-icons"><i class="fas fa-code"></i></div></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let num = [1, 2, 3]; let sum = 0;
+for (let i = 0; i &lt; 3; i++) { sum = sum + num[i]; }
+console.log(sum);</div>
+            <div class="options">
+                <input type="radio" name="q4" id="q4a" class="wrong"><label class="opt-label" for="q4a">1</label>
+                <input type="radio" name="q4" id="q4b" class="wrong"><label class="opt-label" for="q4b">3</label>
+                <input type="radio" name="q4" id="q4c" class="correct"><label class="opt-label" for="q4c">6</label>
+                <input type="radio" name="q4" id="q4d" class="wrong"><label class="opt-label" for="q4d">0</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">6 — مجموع العناصر 1+2+3 يساوي 6.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 5 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 5</span></div>
+            <p class="q-text">ما خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let num = 100;
+if (num == 100) { console.log("correct"); } else { console.log("miss"); }</div>
+            <div class="options">
+                <input type="radio" name="q5" id="q5a" class="correct"><label class="opt-label" for="q5a">correct</label>
+                <input type="radio" name="q5" id="q5b" class="wrong"><label class="opt-label" for="q5b">miss</label>
+                <input type="radio" name="q5" id="q5c" class="wrong"><label class="opt-label" for="q5c">ليس هناك أي خرج</label>
+                <input type="radio" name="q5" id="q5d" class="wrong"><label class="opt-label" for="q5d">لا توجد اجابة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">correct — الشرط يتحقق لأن قيمة المتغير تساوي 100.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 6 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 6</span></div>
+            <p class="q-text">اختر نتيجة الإخراج للبرنامج التالي:</p>
+            <div class="code-box">let num = 10;
+console.log(num == 5)</div>
+            <div class="options">
+                <input type="radio" name="q6" id="q6a" class="wrong"><label class="opt-label" for="q6a">10</label>
+                <input type="radio" name="q6" id="q6b" class="wrong"><label class="opt-label" for="q6b">true</label>
+                <input type="radio" name="q6" id="q6c" class="wrong"><label class="opt-label" for="q6c">5</label>
+                <input type="radio" name="q6" id="q6d" class="correct"><label class="opt-label" for="q6d">false</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">false — لأن 10 لا يساوي 5.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 7 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 7</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">console.log(typeof "7")</div>
+            <div class="options">
+                <input type="radio" name="q7" id="q7a" class="wrong"><label class="opt-label" for="q7a">7</label>
+                <input type="radio" name="q7" id="q7b" class="correct"><label class="opt-label" for="q7b">string</label>
+                <input type="radio" name="q7" id="q7c" class="wrong"><label class="opt-label" for="q7c">number</label>
+                <input type="radio" name="q7" id="q7d" class="wrong"><label class="opt-label" for="q7d">Boolean</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">string — النص بين علامات اقتباس نوعه String.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 8 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 8</span></div>
+            <p class="q-text">لطباعة طول المصفوفة التالية إلى وحدة التحكم، ماذا نستخدم؟</p>
+            <div class="code-box">let num = [2, 4, 6, 8, 10]</div>
+            <div class="options">
+                <input type="radio" name="q8" id="q8a" class="wrong"><label class="opt-label" for="q8a">console.log(num);</label>
+                <input type="radio" name="q8" id="q8b" class="correct"><label class="opt-label" for="q8b">console.log(num.length);</label>
+                <input type="radio" name="q8" id="q8c" class="wrong"><label class="opt-label" for="q8c">console.log("num");</label>
+                <input type="radio" name="q8" id="q8d" class="wrong"><label class="opt-label" for="q8d">num</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">num.length — خاصية length تُرجع عدد عناصر المصفوفة.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 9 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 9</span></div>
+            <p class="q-text">اختر نتيجة الإخراج للبرنامج التالي:</p>
+            <div class="code-box">let num = 10;
+console.log(num == 10)</div>
+            <div class="options">
+                <input type="radio" name="q9" id="q9a" class="wrong"><label class="opt-label" for="q9a">10</label>
+                <input type="radio" name="q9" id="q9b" class="correct"><label class="opt-label" for="q9b">true</label>
+                <input type="radio" name="q9" id="q9c" class="wrong"><label class="opt-label" for="q9c">5</label>
+                <input type="radio" name="q9" id="q9d" class="wrong"><label class="opt-label" for="q9d">false</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">true — المقارنة بقيمتين متساويتين تُرجع true.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 10 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 10</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج؟؟</p>
+            <div class="code-box">console.log(100 === 500)</div>
+            <div class="options">
+                <input type="radio" name="q10" id="q10a" class="correct"><label class="opt-label" for="q10a">false</label>
+                <input type="radio" name="q10" id="q10b" class="wrong"><label class="opt-label" for="q10b">true</label>
+                <input type="radio" name="q10" id="q10c" class="wrong"><label class="opt-label" for="q10c">100</label>
+                <input type="radio" name="q10" id="q10d" class="wrong"><label class="opt-label" for="q10d">500</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">false — التطابق الصارم === يفحص القيمة والنوع وكلاهما غير متساويين.</span>
+            </div>
+        </div>
+
+        <div class="footer">مصمم العرض: المهندس محمد محمود شاهين - 01029966799</div>
+    </div>
+
+    <!-- الصفحة 2 -->
+    <div class="page">
+        <div class="pattern"></div>
+        <div class="decoration square"></div>
+        <div class="header">
+            <h1>امتحان توفاس الشامل (TOPAS)</h1>
+            <p>الجزء الثاني - الأسئلة 11 إلى 20</p>
+        </div>
+
+        <!-- سؤال 11 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 11</span></div>
+            <p class="q-text">اختر عبارة شرطية تعبّر عن: "قيمة المتغيّر num أصغر من 10".</p>
+            <div class="options">
+                <input type="radio" name="q11" id="q11a" class="correct"><label class="opt-label" for="q11a">num &lt; 10</label>
+                <input type="radio" name="q11" id="q11b" class="wrong"><label class="opt-label" for="q11b">num &gt;= 10</label>
+                <input type="radio" name="q11" id="q11c" class="wrong"><label class="opt-label" for="q11c">num &lt;= 10</label>
+                <input type="radio" name="q11" id="q11d" class="wrong"><label class="opt-label" for="q11d">num == 10</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">num &lt; 10 — ‎أصغر من يُعبّر عنها بالعلامة &lt;.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 12 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 12</span></div>
+            <p class="q-text">أي من هذه البرامج يخرج النص "number" في وحدة التحكم؟</p>
+            <div class="options">
+                <input type="radio" name="q12" id="q12a" class="wrong"><label class="opt-label" for="q12a">console.log(Number("500"));</label>
+                <input type="radio" name="q12" id="q12b" class="wrong"><label class="opt-label" for="q12b">console.log(typeof "500");</label>
+                <input type="radio" name="q12" id="q12c" class="correct"><label class="opt-label" for="q12c">console.log(typeof 500);</label>
+                <input type="radio" name="q12" id="q12d" class="wrong"><label class="opt-label" for="q12d">console.log(String(500));</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">typeof 500 — النوع للعدد في JS هو "number".</span>
+            </div>
+        </div>
+
+        <!-- سؤال 13 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 13</span></div>
+            <p class="q-text">اختر البرنامج الصحيح الذي يجعل الحاسوب يجمع 7+6 ويخرج الناتج في وحدة التحكم.</p>
+            <div class="options">
+                <input type="radio" name="q13" id="q13a" class="correct"><label class="opt-label" for="q13a">console.log(6 + 7);</label>
+                <input type="radio" name="q13" id="q13b" class="wrong"><label class="opt-label" for="q13b">console.log("6 + 7");</label>
+                <input type="radio" name="q13" id="q13c" class="wrong"><label class="opt-label" for="q13c">console.log("6" + "7");</label>
+                <input type="radio" name="q13" id="q13d" class="wrong"><label class="opt-label" for="q13d">console.log("6" + 7);</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">6 + 7 — الجمع العددي يكون بدون علامات اقتباس.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 14 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 14</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">function calc(num) {
+  let result = num * 5; return result;
+}
+console.log(calc(7))</div>
+            <div class="options">
+                <input type="radio" name="q14" id="q14a" class="wrong"><label class="opt-label" for="q14a">7</label>
+                <input type="radio" name="q14" id="q14b" class="wrong"><label class="opt-label" for="q14b">12</label>
+                <input type="radio" name="q14" id="q14c" class="correct"><label class="opt-label" for="q14c">35</label>
+                <input type="radio" name="q14" id="q14d" class="wrong"><label class="opt-label" for="q14d">5</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">35 — الدالة تضرب 7 × 5 ثم تُرجع الناتج.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 15 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 15</span></div>
+            <p class="q-text">ما هو البرنامج المناسب الذي يخرج الجملة التالية: The answer is 15</p>
+            <div class="options">
+                <input type="radio" name="q15" id="q15a" class="wrong"><label class="opt-label" for="q15a">console.log(The answer is + (3 * 5));</label>
+                <input type="radio" name="q15" id="q15b" class="wrong"><label class="opt-label" for="q15b">console.log("The answer is " (3 * 5));</label>
+                <input type="radio" name="q15" id="q15c" class="correct"><label class="opt-label" for="q15c">console.log("The answer is "+ (3 * 5));</label>
+                <input type="radio" name="q15" id="q15d" class="wrong"><label class="opt-label" for="q15d">لا توجد اجابة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">"The answer is " + (3*5) — نضمّ النص مع نتيجة العملية الحسابية.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 16 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 16</span></div>
+            <p class="q-text">اختر عبارة شرطية تعبّر عن: المتغير num أكبر من أو يساوي 15.</p>
+            <div class="options">
+                <input type="radio" name="q16" id="q16a" class="wrong"><label class="opt-label" for="q16a">num &lt;= 15</label>
+                <input type="radio" name="q16" id="q16b" class="wrong"><label class="opt-label" for="q16b">num &gt; 15</label>
+                <input type="radio" name="q16" id="q16c" class="wrong"><label class="opt-label" for="q16c">num &lt; 15</label>
+                <input type="radio" name="q16" id="q16d" class="correct"><label class="opt-label" for="q16d">num &gt;= 15</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">&gt;= — أكبر من أو يساوي تُكتب بـ >=.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 17 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 17</span></div>
+            <p class="q-text">ما ناتج تنفيذ هذا البرنامج ؟؟</p>
+            <div class="code-box">console.log(Number("num"))</div>
+            <div class="options">
+                <input type="radio" name="q17" id="q17a" class="wrong"><label class="opt-label" for="q17a">num</label>
+                <input type="radio" name="q17" id="q17b" class="correct"><label class="opt-label" for="q17b">NaN</label>
+                <input type="radio" name="q17" id="q17c" class="wrong"><label class="opt-label" for="q17c">true</label>
+                <input type="radio" name="q17" id="q17d" class="wrong"><label class="opt-label" for="q17d">false</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">NaN — تحويل نص غير رقمي إلى Number يُنتج قيمة غير رقمية.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 18 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 18</span></div>
+            <p class="q-text">ما خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">for (let i = 0; i &lt; 2; i++) { console.log("Hello"); }</div>
+            <div class="options">
+                <input type="radio" name="q18" id="q18a" class="wrong"><label class="opt-label" for="q18a">Hello</label>
+                <input type="radio" name="q18" id="q18b" class="correct"><label class="opt-label" for="q18b">Hello Hello</label>
+                <input type="radio" name="q18" id="q18c" class="wrong"><label class="opt-label" for="q18c">Hello Hello Hello</label>
+                <input type="radio" name="q18" id="q18d" class="wrong"><label class="opt-label" for="q18d">لن يكون هناك خرج</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">مرتين — الحلقة تعمل للقيم i=0 و i=1.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 19 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 19</span></div>
+            <p class="q-text">اختر الإجابة الصحيحة للبرنامج الذي يكرر كلمة Process 15 مرة.</p>
+            <div class="options">
+                <input type="radio" name="q19" id="q19a" class="wrong"><label class="opt-label" for="q19a">for (let i=0; i++; i&lt;15) { console.log("Process")};</label>
+                <input type="radio" name="q19" id="q19b" class="wrong"><label class="opt-label" for="q19b">for (let i=0; i&lt;15; i++; ) { console.log("Process")};</label>
+                <input type="radio" name="q19" id="q19c" class="correct"><label class="opt-label" for="q19c">for (let i=0; i&lt;15; i++ ) { console.log("Process")};</label>
+                <input type="radio" name="q19" id="q19d" class="wrong"><label class="opt-label" for="q19d">for (let i=0; i&lt;16; i++ ) { console.log("Process")};</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">i&lt;15; i++ — بناء الحلقة القياسي يبدأ من 0 حتى 14.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 20 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 20</span></div>
+            <p class="q-text">ما خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let science = 90;
+if (science == 91){console.log("win");} else {console.log("lose");}</div>
+            <div class="options">
+                <input type="radio" name="q20" id="q20a" class="correct"><label class="opt-label" for="q20a">lose</label>
+                <input type="radio" name="q20" id="q20b" class="wrong"><label class="opt-label" for="q20b">win</label>
+                <input type="radio" name="q20" id="q20c" class="wrong"><label class="opt-label" for="q20c">90</label>
+                <input type="radio" name="q20" id="q20d" class="wrong"><label class="opt-label" for="q20d">91</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">lose — الشرط لا يتحقق لأن 90 ≠ 91.</span>
+            </div>
+        </div>
+
+        <div class="footer">مصمم العرض: المهندس محمد محمود شاهين - 01029966799</div>
+    </div>
+
+    <!-- الصفحة 3 -->
+    <div class="page">
+        <div class="pattern"></div>
+        <div class="decoration circle"></div>
+        <div class="header">
+            <h1>امتحان توفاس الشامل (TOPAS)</h1>
+            <p>الجزء الثالث - الأسئلة 21 إلى 30</p>
+        </div>
+
+        <!-- سؤال 21 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 21</span></div>
+            <p class="q-text">أي من هذه البرامج يخرج في وحدة التحكم النص "string"؟</p>
+            <div class="options">
+                <input type="radio" name="q21" id="q21a" class="wrong"><label class="opt-label" for="q21a">console.log(String "50");</label>
+                <input type="radio" name="q21" id="q21b" class="correct"><label class="opt-label" for="q21b">console.log(typeof "50");</label>
+                <input type="radio" name="q21" id="q21c" class="wrong"><label class="opt-label" for="q21c">console.log(Number "50");</label>
+                <input type="radio" name="q21" id="q21d" class="wrong"><label class="opt-label" for="q21d">console.log(typeof 50);</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">typeof "50" — النوع للنص هو "string".</span>
+            </div>
+        </div>
+
+        <!-- سؤال 22 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 22</span></div>
+            <p class="q-text">اختر البرنامج الصحيح لإخراج القيم العددية العشوائية.</p>
+            <div class="options">
+                <input type="radio" name="q22" id="q22a" class="wrong"><label class="opt-label" for="q22a">console.log(Math.min());</label>
+                <input type="radio" name="q22" id="q22b" class="wrong"><label class="opt-label" for="q22b">console.log(random());</label>
+                <input type="radio" name="q22" id="q22c" class="correct"><label class="opt-label" for="q22c">console.log(Math.random());</label>
+                <input type="radio" name="q22" id="q22d" class="wrong"><label class="opt-label" for="q22d">console.log(Math.max());</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">Math.random() — تُعيد عددًا عشوائيًا بين 0 و 1.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 23 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 23</span></div>
+            <p class="q-text">ما خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let people = 4;
+if (people == 2){console.log("off");}
+else if (people &gt;= 3){console.log("on");}
+else {console.log("high price");}</div>
+            <div class="options">
+                <input type="radio" name="q23" id="q23a" class="wrong"><label class="opt-label" for="q23a">high price</label>
+                <input type="radio" name="q23" id="q23b" class="wrong"><label class="opt-label" for="q23b">off</label>
+                <input type="radio" name="q23" id="q23c" class="correct"><label class="opt-label" for="q23c">on</label>
+                <input type="radio" name="q23" id="q23d" class="wrong"><label class="opt-label" for="q23d">لا توجد اجابة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">on — لأن 4 ≥ 3 ينطبق فرع on.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 24 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 24</span></div>
+            <p class="q-text">ما ناتج تشغيل هذا البرنامج ؟؟</p>
+            <div class="code-box">let num = 10;
+if (num &lt;= 4 || num &gt;= 9) { console.log("A"); } else { console.log("B"); }</div>
+            <div class="options">
+                <input type="radio" name="q24" id="q24a" class="correct"><label class="opt-label" for="q24a">A</label>
+                <input type="radio" name="q24" id="q24b" class="wrong"><label class="opt-label" for="q24b">B</label>
+                <input type="radio" name="q24" id="q24c" class="wrong"><label class="opt-label" for="q24c">4</label>
+                <input type="radio" name="q24" id="q24d" class="wrong"><label class="opt-label" for="q24d">7</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">A — الشرط الثاني (num ≥ 9) صحيح حين num=10.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 25 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 25</span></div>
+            <p class="q-text">ما ناتج تشغيل هذا البرنامج ؟؟</p>
+            <div class="code-box">let num = 10;
+if (num &lt;= 4 || num &gt;= 12) { console.log("A"); } else { console.log("B"); }</div>
+            <div class="options">
+                <input type="radio" name="q25" id="q25a" class="wrong"><label class="opt-label" for="q25a">A</label>
+                <input type="radio" name="q25" id="q25b" class="correct"><label class="opt-label" for="q25b">B</label>
+                <input type="radio" name="q25" id="q25c" class="wrong"><label class="opt-label" for="q25c">4</label>
+                <input type="radio" name="q25" id="q25d" class="wrong"><label class="opt-label" for="q25d">7</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">B — كلا الشرطين خاطئان، لذا يُطبع الفرع else.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 26 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 26</span></div>
+            <p class="q-text">ما ناتج تشغيل هذا البرنامج ؟؟</p>
+            <div class="code-box">let num = 10;
+if (num &lt;= 4 &amp;&amp; num &gt;= 9) { console.log("A"); } else { console.log("B"); }</div>
+            <div class="options">
+                <input type="radio" name="q26" id="q26a" class="wrong"><label class="opt-label" for="q26a">A</label>
+                <input type="radio" name="q26" id="q26b" class="correct"><label class="opt-label" for="q26b">B</label>
+                <input type="radio" name="q26" id="q26c" class="wrong"><label class="opt-label" for="q26c">4</label>
+                <input type="radio" name="q26" id="q26d" class="wrong"><label class="opt-label" for="q26d">7</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">B — لا يمكن أن يكون العدد ≤4 و ≥9 في الوقت نفسه.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 27 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 27</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">console.log(10 === "10")</div>
+            <div class="options">
+                <input type="radio" name="q27" id="q27a" class="wrong"><label class="opt-label" for="q27a">10</label>
+                <input type="radio" name="q27" id="q27b" class="correct"><label class="opt-label" for="q27b">false</label>
+                <input type="radio" name="q27" id="q27c" class="wrong"><label class="opt-label" for="q27c">true</label>
+                <input type="radio" name="q27" id="q27d" class="wrong"><label class="opt-label" for="q27d">لا توجد اجابة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">false — ‎=== يفحص النوع أيضًا؛ رقم لا يطابق نصًا.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 28 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 28</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">console.log(10 == "10")</div>
+            <div class="options">
+                <input type="radio" name="q28" id="q28a" class="wrong"><label class="opt-label" for="q28a">10</label>
+                <input type="radio" name="q28" id="q28b" class="wrong"><label class="opt-label" for="q28b">false</label>
+                <input type="radio" name="q28" id="q28c" class="correct"><label class="opt-label" for="q28c">true</label>
+                <input type="radio" name="q28" id="q28d" class="wrong"><label class="opt-label" for="q28d">لا توجد اجابة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">true — ‎== يسمح بتحويل النوع ويُقارن القيمة فقط.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 29 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 29</span></div>
+            <p class="q-text">اختر البرنامج الصحيح لعرض: Today is the 12th from this month</p>
+            <div class="options">
+                <input type="radio" name="q29" id="q29a" class="correct"><label class="opt-label" for="q29a">console.log("Today is the " + (17 - 5) + "th from this month");</label>
+                <input type="radio" name="q29" id="q29b" class="wrong"><label class="opt-label" for="q29b">console.log("Today is the " + 17 - 5 + "th from this month");</label>
+                <input type="radio" name="q29" id="q29c" class="wrong"><label class="opt-label" for="q29c">console.log("Today is the + 17 - 5 + "th from this month");</label>
+                <input type="radio" name="q29" id="q29d" class="wrong"><label class="opt-label" for="q29d">console.log("Today is the + (17 - 5) + th from this month");</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">(17-5) — ضع العملية الحسابية داخل الأقواس وادمجها مع النص.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 30 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 30</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">function Ronaldo(total) {
+  let result = total / 3; return result;
+}
+console.log(Ronaldo(27))</div>
+            <div class="options">
+                <input type="radio" name="q30" id="q30a" class="wrong"><label class="opt-label" for="q30a">3</label>
+                <input type="radio" name="q30" id="q30b" class="wrong"><label class="opt-label" for="q30b">27</label>
+                <input type="radio" name="q30" id="q30c" class="correct"><label class="opt-label" for="q30c">9</label>
+                <input type="radio" name="q30" id="q30d" class="wrong"><label class="opt-label" for="q30d">1</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">9 — قسمة 27 على 3 تُعطي 9.</span>
+            </div>
+        </div>
+
+        <div class="footer">مصمم العرض: المهندس محمد محمود شاهين - 01029966799</div>
+    </div>
+
+    <!-- الصفحة 4 -->
+    <div class="page">
+        <div class="pattern"></div>
+        <div class="decoration square"></div>
+        <div class="header">
+            <h1>امتحان توفاس الشامل (TOPAS)</h1>
+            <p>الجزء الرابع - الأسئلة 31 إلى 40</p>
+        </div>
+
+        <!-- سؤال 31 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 31</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let num = [2, 4, 6]; let sum = 0;
+for (let i = 0; i &lt; 3; i++) { sum = sum + num[i]; }
+console.log(sum)</div>
+            <div class="options">
+                <input type="radio" name="q31" id="q31a" class="correct"><label class="opt-label" for="q31a">12</label>
+                <input type="radio" name="q31" id="q31b" class="wrong"><label class="opt-label" for="q31b">2</label>
+                <input type="radio" name="q31" id="q31c" class="wrong"><label class="opt-label" for="q31c">4</label>
+                <input type="radio" name="q31" id="q31d" class="wrong"><label class="opt-label" for="q31d">6</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">12 — 2+4+6 = 12.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 32 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 32</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let tempList = [10, 15, 13, 16, 14, 12, 17];
+console.log(tempList[3])</div>
+            <div class="options">
+                <input type="radio" name="q32" id="q32a" class="wrong"><label class="opt-label" for="q32a">15</label>
+                <input type="radio" name="q32" id="q32b" class="wrong"><label class="opt-label" for="q32b">13</label>
+                <input type="radio" name="q32" id="q32c" class="correct"><label class="opt-label" for="q32c">16</label>
+                <input type="radio" name="q32" id="q32d" class="wrong"><label class="opt-label" for="q32d">14</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">16 — الفهرس 3 يعني العنصر الرابع في المصفوفة.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 33 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 33</span></div>
+            <p class="q-text">ما البرنامج الذي يحسب 15 ÷ 5 ويعرض الناتج في وحدة التحكم؟</p>
+            <div class="options">
+                <input type="radio" name="q33" id="q33a" class="wrong"><label class="opt-label" for="q33a">console.log(15+5);</label>
+                <input type="radio" name="q33" id="q33b" class="correct"><label class="opt-label" for="q33b">console.log(15/5);</label>
+                <input type="radio" name="q33" id="q33c" class="wrong"><label class="opt-label" for="q33c">console.log(15\5);</label>
+                <input type="radio" name="q33" id="q33d" class="wrong"><label class="opt-label" for="q33d">console.log("15/5");</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">15/5 — القسمة في JS تكون بالرمز /. الناتج 3.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 34 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 34</span></div>
+            <p class="q-text">اختر الرمز الصحيح للضرب في الجافا سكريبت.</p>
+            <div class="options">
+                <input type="radio" name="q34" id="q34a" class="correct"><label class="opt-label" for="q34a">*</label>
+                <input type="radio" name="q34" id="q34b" class="wrong"><label class="opt-label" for="q34b">X</label>
+                <input type="radio" name="q34" id="q34c" class="wrong"><label class="opt-label" for="q34c">/</label>
+                <input type="radio" name="q34" id="q34d" class="wrong"><label class="opt-label" for="q34d">&amp;&amp;</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">* — الرمز النجمي هو معامل الضرب.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 35 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 35</span></div>
+            <p class="q-text">اختر البرنامج الصحيح لعرض نتيجة حساب 500+100 في وحدة التحكم.</p>
+            <div class="options">
+                <input type="radio" name="q35" id="q35a" class="wrong"><label class="opt-label" for="q35a">console.log("500 + 100");</label>
+                <input type="radio" name="q35" id="q35b" class="correct"><label class="opt-label" for="q35b">console.log(500+ 100);</label>
+                <input type="radio" name="q35" id="q35c" class="wrong"><label class="opt-label" for="q35c">console.log("500" + "100");</label>
+                <input type="radio" name="q35" id="q35d" class="wrong"><label class="opt-label" for="q35d">لا توجد نتيجة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">500+100 — بدون اقتباس ليتم التنفيذ حسابيًا ويُطبع 600.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 36 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 36</span></div>
+            <p class="q-text">ما خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let egg = 5;
+if (egg == 0) { console.log("No stock"); }
+else if (egg &lt;= 3) { console.log("Low stock"); }
+else { console.log("In stock"); }</div>
+            <div class="options">
+                <input type="radio" name="q36" id="q36a" class="wrong"><label class="opt-label" for="q36a">No stock</label>
+                <input type="radio" name="q36" id="q36b" class="wrong"><label class="opt-label" for="q36b">Low stock</label>
+                <input type="radio" name="q36" id="q36c" class="correct"><label class="opt-label" for="q36c">In stock</label>
+                <input type="radio" name="q36" id="q36d" class="wrong"><label class="opt-label" for="q36d">لا يوجد اختيار صحيح</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">In stock — لأن 5 أكبر من 3 ينتقل إلى الفرع الأخير.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 37 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 37</span></div>
+            <p class="q-text">ما خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let egg = 5;
+if (egg == 5) { console.log("No stock"); }
+else if (egg &lt;= 3) { console.log("Low stock"); }
+else { console.log("In stock"); }</div>
+            <div class="options">
+                <input type="radio" name="q37" id="q37a" class="correct"><label class="opt-label" for="q37a">No stock</label>
+                <input type="radio" name="q37" id="q37b" class="wrong"><label class="opt-label" for="q37b">Low stock</label>
+                <input type="radio" name="q37" id="q37c" class="wrong"><label class="opt-label" for="q37c">In stock</label>
+                <input type="radio" name="q37" id="q37d" class="wrong"><label class="opt-label" for="q37d">لا توجد اجابة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">No stock — الشرط الأول يتحقق عند القيمة 5.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 38 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 38</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">console.log(Math.floor(15.8))</div>
+            <div class="options">
+                <input type="radio" name="q38" id="q38a" class="wrong"><label class="opt-label" for="q38a">16</label>
+                <input type="radio" name="q38" id="q38b" class="correct"><label class="opt-label" for="q38b">15</label>
+                <input type="radio" name="q38" id="q38c" class="wrong"><label class="opt-label" for="q38c">15.8</label>
+                <input type="radio" name="q38" id="q38d" class="wrong"><label class="opt-label" for="q38d">1</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">15 — ‎floor يُنزل الرقم لأقرب عدد صحيح أقل أو يساويه.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 39 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 39</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">console.log(Math.round(15.8))</div>
+            <div class="options">
+                <input type="radio" name="q39" id="q39a" class="wrong"><label class="opt-label" for="q39a">15.8</label>
+                <input type="radio" name="q39" id="q39b" class="wrong"><label class="opt-label" for="q39b">15</label>
+                <input type="radio" name="q39" id="q39c" class="correct"><label class="opt-label" for="q39c">16</label>
+                <input type="radio" name="q39" id="q39d" class="wrong"><label class="opt-label" for="q39d">16.8</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">16 — ‎round يُقرّب للأقرب؛ ‎0.8 تُقرّب للأعلى.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 40 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 40</span></div>
+            <p class="q-text">ما هي الطريقة الصحيحة لكتابة التعليق؟</p>
+            <div class="options">
+                <input type="radio" name="q40" id="q40a" class="wrong"><label class="opt-label" for="q40a">this is a comment//</label>
+                <input type="radio" name="q40" id="q40b" class="wrong"><label class="opt-label" for="q40b">/this is a comment/</label>
+                <input type="radio" name="q40" id="q40c" class="correct"><label class="opt-label" for="q40c">//this is a comment</label>
+                <input type="radio" name="q40" id="q40d" class="wrong"><label class="opt-label" for="q40d">/this is a comment</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">// — التعليق أحادي السطر يبدأ بـ // في JS.</span>
+            </div>
+        </div>
+
+        <div class="footer">مصمم العرض: المهندس محمد محمود شاهين - 01029966799</div>
+    </div>
+
+    <!-- الصفحة 5 -->
+    <div class="page">
+        <div class="pattern"></div>
+        <div class="decoration circle"></div>
+        <div class="header">
+            <h1>امتحان توفاس الشامل (TOPAS)</h1>
+            <p>الجزء الخامس - الأسئلة 41 إلى 48</p>
+        </div>
+
+        <!-- سؤال 41 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 41</span></div>
+            <p class="q-text">ما البرنامج الذي يحقق: إذا كان المتغير A أكبر من أو يساوي 5 أو المتغير B أصغر من أو يساوي 10 اطبع "Good".</p>
+            <div class="options">
+                <input type="radio" name="q41" id="q41a" class="correct"><label class="opt-label" for="q41a">let A = 4; let B = 3; if( A&gt;=5 | B &lt;= 10) { console.log("Good")};</label>
+                <input type="radio" name="q41" id="q41b" class="wrong"><label class="opt-label" for="q41b">let A = 4; let B = 3; if( A&gt;=5 &amp;&amp; B &lt;= 10) { console.log("Good")};</label>
+                <input type="radio" name="q41" id="q41c" class="wrong"><label class="opt-label" for="q41c">let A = 4; let B = 3; if( A &lt;= 5 | B&gt;=10) { console.log("Good")};</label>
+                <input type="radio" name="q41" id="q41d" class="wrong"><label class="opt-label" for="q41d">let A = 4; let B = 3; if( A &lt;= 5 &amp;&amp; B&gt;=10) { console.log("Good")};</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">شرط "أو" — المطلوب OR؛ عند A=4 وB=3 يتحقق B ≤ 10 فيطبع Good.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 42 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 42</span></div>
+            <p class="q-text">لطباعة جميع قيم المصفوفة التالية، ماذا نستخدم ؟؟</p>
+            <div class="code-box">let num = [2, 4, 6, 8, 10]</div>
+            <div class="options">
+                <input type="radio" name="q42" id="q42a" class="wrong"><label class="opt-label" for="q42a">console.log("num");</label>
+                <input type="radio" name="q42" id="q42b" class="wrong"><label class="opt-label" for="q42b">console.log(5);</label>
+                <input type="radio" name="q42" id="q42c" class="correct"><label class="opt-label" for="q42c">console.log(num);</label>
+                <input type="radio" name="q42" id="q42d" class="wrong"><label class="opt-label" for="q42d">num</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">console.log(num) — يطبع كل عناصر المصفوفة مباشرة.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 43 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 43</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let tempList = [2, 8, 7, 10, 6, 9]; let total=0;
+for (let i=0; i&lt;6; i++ ) { total = total + tempList[i] }
+console.log(total/6)</div>
+            <div class="options">
+                <input type="radio" name="q43" id="q43a" class="wrong"><label class="opt-label" for="q43a">6</label>
+                <input type="radio" name="q43" id="q43b" class="correct"><label class="opt-label" for="q43b">7</label>
+                <input type="radio" name="q43" id="q43c" class="wrong"><label class="opt-label" for="q43c">8</label>
+                <input type="radio" name="q43" id="q43d" class="wrong"><label class="opt-label" for="q43d">10</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">7 — المجموع 42 والقسمة على 6 تُعطي 7.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 44 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 44</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let number=5;
+number = number + 15;
+console.log(number)</div>
+            <div class="options">
+                <input type="radio" name="q44" id="q44a" class="wrong"><label class="opt-label" for="q44a">5</label>
+                <input type="radio" name="q44" id="q44b" class="correct"><label class="opt-label" for="q44b">20</label>
+                <input type="radio" name="q44" id="q44c" class="wrong"><label class="opt-label" for="q44c">15</label>
+                <input type="radio" name="q44" id="q44d" class="wrong"><label class="opt-label" for="q44d">لا توجد اجابة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">20 — 5 + 15 = 20 ثم تُطبع القيمة الجديدة.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 45 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 45</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let fish=2;
+fish = fish + 8;
+fish = fish + 12;
+console.log(fish)</div>
+            <div class="options">
+                <input type="radio" name="q45" id="q45a" class="wrong"><label class="opt-label" for="q45a">10</label>
+                <input type="radio" name="q45" id="q45b" class="wrong"><label class="opt-label" for="q45b">12</label>
+                <input type="radio" name="q45" id="q45c" class="wrong"><label class="opt-label" for="q45c">14</label>
+                <input type="radio" name="q45" id="q45d" class="correct"><label class="opt-label" for="q45d">22</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">22 — الناتج الفعلي 2+8+12 = 22.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 46 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 46</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let num = 10;
+if (num &gt;= 20){ console.log("New bicycle"); }
+else if (num &lt;= 15){ console.log("Old bicycle"); }
+else { console.log("Stickers"); }</div>
+            <div class="options">
+                <input type="radio" name="q46" id="q46a" class="wrong"><label class="opt-label" for="q46a">New bicycle</label>
+                <input type="radio" name="q46" id="q46b" class="correct"><label class="opt-label" for="q46b">Old bicycle</label>
+                <input type="radio" name="q46" id="q46c" class="wrong"><label class="opt-label" for="q46c">Stickers</label>
+                <input type="radio" name="q46" id="q46d" class="wrong"><label class="opt-label" for="q46d">لا توجد اجابة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">Old bicycle — لأن 10 ≤ 15 يتحقق فرع الوسط.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 47 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 47</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let num = 10;
+if (num &gt;= 20 || num == 15) { console.log("New bicycle"); }
+else if (num &lt;= 5 &amp;&amp; num &gt; 15){ console.log("Old bicycle"); }
+else { console.log("Stickers"); }</div>
+            <div class="options">
+                <input type="radio" name="q47" id="q47a" class="wrong"><label class="opt-label" for="q47a">New bicycle</label>
+                <input type="radio" name="q47" id="q47b" class="wrong"><label class="opt-label" for="q47b">Old bicycle</label>
+                <input type="radio" name="q47" id="q47c" class="correct"><label class="opt-label" for="q47c">Stickers</label>
+                <input type="radio" name="q47" id="q47d" class="wrong"><label class="opt-label" for="q47d">لا توجد اجابة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">Stickers — الشرطان الأول والثاني خاطئان، فتُطبع القيمة الافتراضية.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 48 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 48</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">console.log(Math.max(300,100,200))</div>
+            <div class="options">
+                <input type="radio" name="q48" id="q48a" class="wrong"><label class="opt-label" for="q48a">100</label>
+                <input type="radio" name="q48" id="q48b" class="wrong"><label class="opt-label" for="q48b">200</label>
+                <input type="radio" name="q48" id="q48c" class="correct"><label class="opt-label" for="q48c">300</label>
+                <input type="radio" name="q48" id="q48d" class="wrong"><label class="opt-label" for="q48d">لا توجد اجابة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">300 — max يُعيد أكبر قيمة بين المُدخلات.</span>
+            </div>
+        </div>
+
+        <div class="footer">مصمم العرض: المهندس محمد محمود شاهين - 01029966799</div>
+    </div>
+
+    <!-- الصفحة 6 -->
+    <div class="page">
+        <div class="pattern"></div>
+        <div class="decoration square"></div>
+        <div class="header">
+            <h1>امتحان توفاس الشامل (TOPAS)</h1>
+            <p>الجزء الأخير - الأسئلة 49 إلى 50</p>
+        </div>
+
+        <!-- سؤال 49 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 49</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج ؟؟</p>
+            <div class="code-box">let num = [5, 10, 15, 20, 25];
+console.log(num[2])</div>
+            <div class="options">
+                <input type="radio" name="q49" id="q49a" class="wrong"><label class="opt-label" for="q49a">5</label>
+                <input type="radio" name="q49" id="q49b" class="wrong"><label class="opt-label" for="q49b">10</label>
+                <input type="radio" name="q49" id="q49c" class="correct"><label class="opt-label" for="q49c">15</label>
+                <input type="radio" name="q49" id="q49d" class="wrong"><label class="opt-label" for="q49d">20</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">15 — الفهرس يبدأ من 0؛ num[2] هو العنصر الثالث.</span>
+            </div>
+        </div>
+
+        <!-- سؤال 50 -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال 50</span></div>
+            <p class="q-text">كم مرة سيقوم هذا البرنامج بتكرار كلمة "good"؟</p>
+            <div class="code-box">for (let i = 1; i &lt; 3; i++) {
+  console.log("good");
+}</div>
+            <div class="options">
+                <input type="radio" name="q50" id="q50a" class="wrong"><label class="opt-label" for="q50a">مرة واحدة</label>
+                <input type="radio" name="q50" id="q50b" class="correct"><label class="opt-label" for="q50b">مرتين</label>
+                <input type="radio" name="q50" id="q50c" class="wrong"><label class="opt-label" for="q50c">3 مرات</label>
+                <input type="radio" name="q50" id="q50d" class="wrong"><label class="opt-label" for="q50d">لا توجد اجابة صحيحة</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">مرتين — الحلقة تعمل للقيم i=1 و i=2 فقط.</span>
+            </div>
+        </div>
+
+        <!-- سؤال إضافي للتأكد من 50 سؤالاً -->
+        <div class="q-card">
+            <div class="q-header"><span class="q-num">سؤال إضافي</span></div>
+            <p class="q-text">ما نتيجة خرج هذا البرنامج؟</p>
+            <div class="code-box">console.log(5 > 3 && 10 < 20)</div>
+            <div class="options">
+                <input type="radio" name="q51" id="q51a" class="correct"><label class="opt-label" for="q51a">true</label>
+                <input type="radio" name="q51" id="q51b" class="wrong"><label class="opt-label" for="q51b">false</label>
+                <input type="radio" name="q51" id="q51c" class="wrong"><label class="opt-label" for="q51c">5</label>
+                <input type="radio" name="q51" id="q51d" class="wrong"><label class="opt-label" for="q51d">10</label>
+            </div>
+            <div class="hint">
+                <i class="fas fa-lightbulb"></i> انقر هنا لعرض التلميح
+                <span class="hint-val">true — كلا الشرطين صحيحان (5>3 صحيح، 10<20 صحيح).</span>
+            </div>
+        </div>
+
+        <div class="footer">مصمم العرض: المهندس محمد محمود شاهين - 01029966799</div>
+    </div>
+
+<script>
+// إنشاء جسيمات خلفية ديناميكية
+function createParticles() {
+    const colors = ['rgba(26, 42, 108, 0.1)', 'rgba(178, 31, 31, 0.1)', 'rgba(253, 187, 45, 0.1)'];
+    
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('bg-particle');
+        
+        // حجم عشوائي
+        const size = Math.random() * 100 + 20;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // موقع عشوائي
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        
+        // لون عشوائي
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        // حركة عشوائية
+        const duration = Math.random() * 30 + 20;
+        const delay = Math.random() * 5;
+        
+        particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`;
+        
+        document.body.appendChild(particle);
+    }
+}
+
+// إضافة حركة عائمة للجسيمات
+const style = document.createElement('style');
+style.textContent = `
+@keyframes float {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) rotate(180deg); }
+    100% { transform: translate(0, 0) rotate(360deg); }
+}
+`;
+document.head.appendChild(style);
+
+// تهيئة التلميح التفاعلي
+document.addEventListener("DOMContentLoaded", () => {
+    // إنشاء الجسيمات الخلفية
+    createParticles();
+    
+    // إضافة تأثير التلميح
+    document.querySelectorAll(".hint").forEach(hint => {
+        hint.addEventListener("click", (e) => {
+            // منع النقر من الانتشار إذا تم النقر على التلميح مباشرة
+            if (e.target.classList.contains('hint-val')) return;
+            
+            const val = hint.querySelector(".hint-val");
+            const isVisible = val.style.display === "block";
+            
+            // إخفاء جميع التلميحات الأخرى أولاً
+            document.querySelectorAll(".hint-val").forEach(h => {
+                h.style.display = "none";
+            });
+            
+            // تبديل عرض التلميح الحالي
+            val.style.display = isVisible ? "none" : "block";
+            
+            // تحديث نص التلميح
+            const icon = hint.querySelector("i");
+            if (isVisible) {
+                icon.className = "fas fa-lightbulb";
+            } else {
+                icon.className = "fas fa-times";
+            }
+        });
+    });
+    
+    // إضافة تأثيرات للخيارات عند النقر
+    document.querySelectorAll('.opt-label').forEach(label => {
+        label.addEventListener('click', function() {
+            // إزالة التأثير السابق من جميع خيارات نفس السؤال
+            const question = this.closest('.q-card');
+            question.querySelectorAll('.opt-label').forEach(l => {
+                l.style.transform = '';
+                l.style.boxShadow = '';
+            });
+            
+            // تطبيق تأثير على الخيار المختار
+            this.style.transform = 'scale(0.98)';
+            this.style.boxShadow = 'inset 0 2px 5px rgba(0,0,0,0.1)';
+            
+            // إعادة التأثير بعد فترة
+            setTimeout(() => {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            }, 200);
+        });
+    });
+    
+    // إضافة تأثيرات عند تمرير الماوس على البطاقات
+    document.querySelectorAll('.q-card').forEach((card, index) => {
+        // تأخير ظهور البطاقات
+        card.style.animationDelay = `${index * 0.1}s`;
+        
+        // تأثير عند التمرير
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+    
+    // تحديث مؤشر التقدم
+    function updateProgress() {
+        const totalQuestions = 51; // 50 سؤال + سؤال إضافي
+        const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+        const progress = document.querySelector('.progress-indicator');
+        
+        if (progress) {
+            progress.innerHTML = `<i class="fas fa-clipboard-list"></i> تم الإجابة على ${answered} من ${totalQuestions} سؤال`;
+            
+            // تغيير اللون حسب التقدم
+            if (answered >= totalQuestions * 0.8) {
+                progress.style.background = 'rgba(39, 174, 96, 0.9)';
+                progress.style.color = 'white';
+            } else if (answered >= totalQuestions * 0.5) {
+                progress.style.background = 'rgba(253, 187, 45, 0.9)';
+            }
+        }
+    }
+    
+    // تحديث التقدم عند اختيار أي إجابة
+    document.querySelectorAll('input[type="radio"]').forEach(input => {
+        input.addEventListener('change', updateProgress);
+    });
+    
+    // تحديث التقدم عند التحميل
+    updateProgress();
+});
+</script>
+
+</body>
+</html>
