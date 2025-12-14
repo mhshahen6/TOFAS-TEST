@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار المعلومات - تصميم احترافي محسّن</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=El+Messiri:wght@400;500;600;700&family=Lateef:wght@400;500;600;700&family=Mirza:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Amiri', serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: #333;
+            line-height: 1.7;
+            padding: 25px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* خلفية جمالية */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 15% 25%, rgba(66, 133, 244, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 75%, rgba(219, 68, 55, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(244, 180, 0, 0.05) 0%, transparent 40%);
+            z-index: -1;
+        }
+        
+        /* عناصر زخرفية */
+        .decoration-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            z-index: -1;
+        }
+        
+        .decoration-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #4285f4, #34a853);
+            top: -150px;
+            left: -150px;
+        }
+        
+        .decoration-2 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #ea4335, #fbbc05);
+            bottom: -100px;
+            right: -100px;
+        }
+        
+        .container {
+            max-width: 210mm; /* عرض A4 */
+            min-height: 297mm; /* ارتفاع A4 */
+            margin: 0 auto 30px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.15),
+                0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            padding: 25mm;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* تصميم الحدود الإبداعية */
+        .border-design {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px solid #8B7355;
+            border-radius: 6px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .border-design::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            border-radius: 4px;
+        }
+        
+        .corner-decoration {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-color: #4285f4;
+            z-index: 2;
+        }
+        
+        .corner-top-left {
+            top: 20px;
+            left: 20px;
+            border-top: 3px solid;
+            border-left: 3px solid;
+        }
+        
+        .corner-top-right {
+            top: 20px;
+            right: 20px;
+            border-top: 3px solid;
+            border-right: 3px solid;
+        }
+        
+        .corner-bottom-left {
+            bottom: 20px;
+            left: 20px;
+            border-bottom: 3px solid;
+            border-left: 3px solid;
+        }
+        
+        .corner-bottom-right {
+            bottom: 20px;
+            right: 20px;
+            border-bottom: 3px solid;
+            border-right: 3px solid;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 30%;
+            left: 30%;
+            height: 3px;
+            background: linear-gradient(to left, transparent, #4285f4, transparent);
+        }
+        
+        .header h1 {
+            font-family: 'El Messiri', sans-serif;
+            font-size: 38px;
+            color: #1a237e;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .header h2 {
+            font-family: 'Mirza', cursive;
+            font-size: 28px;
+            color: #5c6bc0;
+            font-weight: 600;
+        }
+        
+        .section-title {
+            font-family: 'El Messiri', sans-serif;
+            font-size: 26px;
+            color: #1a237e;
+            background: linear-gradient(to left, rgba(66, 133, 244, 0.15), rgba(66, 133, 244, 0.05));
+            padding: 15px 20px;
+            border-right: 5px solid #4285f4;
+            margin: 35px 0 25px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 8px rgba(66, 133, 244, 0.1);
+        }
+        
+        .question-block {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #e0e0e0;
+        }
+        
+        /* تحسين خط الأسئلة */
+        .question-text {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #0d47a1; /* لون أزرق داكن */
+            font-weight: 700;
+            font-family: 'Mirza', cursive;
+            line-height: 1.8;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .options {
+            margin-right: 25px;
+            margin-top: 15px;
+        }
+        
+        .option {
+            margin-bottom: 12px;
+            padding: 8px 0;
+            font-size: 19px;
+            font-weight: 500;
+            color: #333;
+            font-family: 'Amiri', serif;
+        }
+        
+        /* تلميح الإجابة المخفي */
+        .answer-hint {
+            margin-top: 20px;
+        }
+        
+        .hint-toggle {
+            background: linear-gradient(to left, #4285f4, #5c6bc0);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-family: 'El Messiri', sans-serif;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(66, 133, 244, 0.3);
+        }
+        
+        .hint-toggle:hover {
+            background: linear-gradient(to left, #3367d6, #3f51b5);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(66, 133, 244, 0.4);
+        }
+        
+        .hint-content {
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95));
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 18px;
+            color: #2c3e50;
+            border-right: 4px solid #ea4335;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(234, 67, 53, 0.2);
+        }
+        
+        .hint-content.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* تحسين خط الإجابات */
+        .correct-answer {
+            color: #d32f2f; /* لون أحمر داكن */
+            font-weight: 800;
+            margin-bottom: 12px;
+            position: relative;
+            padding-right: 35px;
+            font-size: 20px;
+            font-family: 'Lateef', cursive;
+        }
+        
+        .correct-answer::before {
+            content: "✓";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 26px;
+            height: 26px;
+            background-color: #d32f2f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .explanation {
+            margin-bottom: 12px;
+            font-size: 18px;
+            color: #37474f;
+            line-height: 1.7;
+            font-family: 'Amiri', serif;
+            padding-right: 10px;
+        }
+        
+        .source {
+            display: inline-block;
+            background-color: rgba(76, 175, 80, 0.15);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 15px;
+            color: #2e7d32;
+            margin-top: 10px;
+            font-weight: 600;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: linear-gradient(to left, #5c6bc0, #3949ab);
+            color: white;
+            padding: 16px;
+            font-family: 'El Messiri', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #eee;
+            font-family: 'Amiri', serif;
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(92, 107, 192, 0.05);
+        }
+        
+        tr:hover {
+            background-color: rgba(66, 133, 244, 0.1);
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(to left, #8B7355, #6d5c45);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-family: 'El Messiri', sans-serif;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(139, 115, 85, 0.3);
+        }
+        
+        .nav-btn:hover {
+            background: linear-gradient(to left, #6d5c45, #5a4a38);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(139, 115, 85, 0.4);
+        }
+        
+        .nav-btn:disabled {
+            background: linear-gradient(to left, #b8a58d, #a5947e);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .page-indicator {
+            font-family: 'El Messiri', sans-serif;
+            font-size: 18px;
+            color: #5c6bc0;
+            font-weight: 700;
+            background-color: rgba(92, 107, 192, 0.1);
+            padding: 10px 25px;
+            border-radius: 50px;
+            border: 1px solid rgba(92, 107, 192, 0.2);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #e0e0e0;
+            color: #5c6bc0;
+            font-family: 'Mirza', cursive;
+            font-size: 20px;
+        }
+        
+        .designer-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(to right, rgba(66, 133, 244, 0.1), rgba(234, 67, 53, 0.1));
+            padding: 15px 30px;
+            border-radius: 50px;
+            margin-top: 15px;
+            border: 1px solid rgba(66, 133, 244, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .designer-info i {
+            color: #4285f4;
+            font-size: 24px;
+        }
+        
+        .designer-name {
+            font-weight: 700;
+            color: #1a237e;
+            font-size: 22px;
+        }
+        
+        .designer-phone {
+            color: #d32f2f;
+            font-weight: 600;
+        }
+        
+        /* تصميم صفحة الإجابات */
+        .answers-page .section-title {
+            margin-top: 20px;
+        }
+        
+        /* تصميم متجاوب */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                margin: 0;
+                max-width: 100%;
+                background-color: white;
+            }
+            
+            .navigation, .footer, .hint-toggle, .decoration-1, .decoration-2 {
+                display: none;
+            }
+            
+            .page {
+                display: block !important;
+                page-break-after: always;
+            }
+            
+            .page:last-child {
+                page-break-after: auto;
+            }
+            
+            .hint-content {
+                display: block !important;
+                border: 1px solid #ddd;
+                box-shadow: none;
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 95%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .container {
+                padding: 15mm;
+                max-width: 100%;
+            }
+            
+            .header h1 {
+                font-size: 30px;
+            }
+            
+            .header h2 {
+                font-size: 22px;
+            }
+            
+            .section-title {
+                font-size: 22px;
+            }
+            
+            .question-text {
+                font-size: 20px;
+            }
+            
+            table {
+                font-size: 16px;
+            }
+            
+            th, td {
+                padding: 12px 14px;
+            }
+            
+            .decoration-1, .decoration-2 {
+                display: none;
+            }
+        }
+        
+        /* تصميم خاص للفراغات في أسئلة أكمل */
+        .blank {
+            display: inline-block;
+            min-width: 100px;
+            border-bottom: 2px dashed #4285f4;
+            padding: 0 5px;
+            margin: 0 5px;
+            color: #d32f2f;
+            font-weight: 700;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- عناصر زخرفية -->
+    <div class="decoration-element decoration-1"></div>
+    <div class="decoration-element decoration-2"></div>
+    
+    <!-- تصميم الحدود -->
+    <div class="border-design"></div>
+    <div class="corner-decoration corner-top-left"></div>
+    <div class="corner-decoration corner-top-right"></div>
+    <div class="corner-decoration corner-bottom-left"></div>
+    <div class="corner-decoration corner-bottom-right"></div>
+    
+    <div class="container">
+        <!-- الصفحة 1: أسئلة اختيار من متعدد -->
+        <div class="page active" id="page1">
+            <div class="header">
+                <h1>اختبار مفاهيم المعلومات والبيانات</h1>
+                <h2>تصميم احترافي محسّن بتخطيط A4</h2>
+            </div>
+            
+            <div class="section-title">أولاً: اختيار من متعدد (10 أسئلة)</div>
+            
+            <!-- سؤال 1 -->
+            <div class="question-block">
+                <div class="question-text">1. الخاصية التي تعني إمكانية نسخ المعلومات بسهولة بكميات كبيرة تسمى:</div>
+                <div class="options">
+                    <div class="option">أ) الاستمرارية</div>
+                    <div class="option">ب) التكرار</div>
+                    <div class="option">ج) الانتشار</div>
+                    <div class="option">د) التخزين</div>
+                </div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(1)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint1">
+                        <div class="correct-answer">ب) التكرار</div>
+                        <div class="explanation">التكرار هو الخاصية التي تعني إمكانية نسخ المعلومات بسهولة بكميات كبيرة.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 2 -->
+            <div class="question-block">
+                <div class="question-text">2. تعد <strong>المعلومات</strong> هي بيانات خام تم:</div>
+                <div class="options">
+                    <div class="option">أ) حفظها</div>
+                    <div class="option">ب) نشرها</div>
+                    <div class="option">ج) تنظيمها</div>
+                    <div class="option">د) إتلافها</div>
+                </div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(2)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint2">
+                        <div class="correct-answer">ج) تنظيمها</div>
+                        <div class="explanation">المعلومات هي بيانات خام تم تنظيمها، ويجب أن تكون ذات معنى أو قيمة للمتلقي لاستخدامها في اتخاذ القرارات.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 3 -->
+            <div class="question-block">
+                <div class="question-text">3. من أمثلة <strong>المصادر الأولية</strong> التي يتم الحصول على المعلومات منها:</div>
+                <div class="options">
+                    <div class="option">أ) الكتب</div>
+                    <div class="option">ب) التلفزيون</div>
+                    <div class="option">ج) تقارير التجارب</div>
+                    <div class="option">د) الصحف</div>
+                </div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(3)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint3">
+                        <div class="correct-answer">ج) تقارير التجارب</div>
+                        <div class="explanation">تقارير التجارب تعد من أمثلة المعلومات الأولية، التي تُجمع من خلال التجربة الشخصية المباشرة أو البحث والتجارب.</div>
+                        <div class="source">المصدر: [3], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 4 -->
+            <div class="question-block">
+                <div class="question-text">4. عملية مقارنة المعلومات من مصادر متعددة للتأكد من دقتها وموثوقيتها تسمى:</div>
+                <div class="options">
+                    <div class="option">أ) التخزين</div>
+                    <div class="option">ب) التحقق المتبادل</div>
+                    <div class="option">ج) التكرار</div>
+                    <div class="option">د) الانتشار</div>
+                </div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(4)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint4">
+                        <div class="correct-answer">ب) التحقق المتبادل</div>
+                        <div class="explanation">التحقق المتبادل هو عملية مقارنة المعلومات من مصادر متعددة للتأكد من دقتها وموثوقيتها.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 5 -->
+            <div class="question-block">
+                <div class="question-text">5. البيانات تمثل باستخدام:</div>
+                <div class="options">
+                    <div class="option">أ) الألوان</div>
+                    <div class="option">ب) الأصوات</div>
+                    <div class="option">ج) الصور</div>
+                    <div class="option">د) الأرقام أو الحروف أو الرموز</div>
+                </div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(5)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint5">
+                        <div class="correct-answer">د) الأرقام أو الحروف أو الرموز</div>
+                        <div class="explanation">البيانات هي حقائق تمثل باستخدام الأرقام أو الأحرف أو الرموز.</div>
+                        <div class="source">المصدر: [3], [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 6 -->
+            <div class="question-block">
+                <div class="question-text">6. يتم الحصول على المعلومات <strong>الثانوية</strong> من خلال طرف ثالث مثل:</div>
+                <div class="options">
+                    <div class="option">أ) التجربة المباشرة</div>
+                    <div class="option">ب) الكتب والصحف والتلفزيون</div>
+                    <div class="option">ج) جداول نتائج الاستبيانات</div>
+                    <div class="option">د) الملاحظة المباشرة</div>
+                </div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(6)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint6">
+                        <div class="correct-answer">ب) الكتب والصحف والتلفزيون</div>
+                        <div class="explanation">يتم الحصول على المعلومات الثانوية من خلال طرف ثالث، ومن أمثلتها الكتب والصحف والتلفزيون.</div>
+                        <div class="source">المصدر: [3], [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 7 -->
+            <div class="question-block">
+                <div class="question-text">7. ما الخاصية التي تعني سهولة توصيل المعلومات ونشرها؟</div>
+                <div class="options">
+                    <div class="option">أ) التخزين</div>
+                    <div class="option">ب) التسجيل</div>
+                    <div class="option">ج) الانتشار</div>
+                    <div class="option">د) الاستمرارية</div>
+                </div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(7)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint7">
+                        <div class="correct-answer">ج) الانتشار</div>
+                        <div class="explanation">الانتشار هي خاصية تعني سهولة توصيل المعلومات ونشرها عبر وسائل الإعلام.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 8 -->
+            <div class="question-block">
+                <div class="question-text">8. المعرفة هي معلومات منظمة تساعد في حل:</div>
+                <div class="options">
+                    <div class="option">أ) البيانات الخام</div>
+                    <div class="option">ب) رموز مجردة</div>
+                    <div class="option">ج) المشكلات</div>
+                    <div class="option">د) إشارات صوتية</div>
+                </div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(8)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint8">
+                        <div class="correct-answer">ج) المشكلات</div>
+                        <div class="explanation">المعرفة هي معلومات منظمة ومحللة بشكل منهجي للمساعدة في حل المشكلات.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 9 -->
+            <div class="question-block">
+                <div class="question-text">9. أي مما يلي يعد من وسائل نقل المعلومات؟</div>
+                <div class="options">
+                    <div class="option">أ) محرك أقراص</div>
+                    <div class="option">ب) التخزين السحابي</div>
+                    <div class="option">ج) الإنترنت</div>
+                    <div class="option">د) التخزين</div>
+                </div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(9)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint9">
+                        <div class="correct-answer">ج) الإنترنت</div>
+                        <div class="explanation">الإنترنت يعد من وسائل نقل المعلومات (الانتشار)، إلى جانب البريد والراديو.</div>
+                        <div class="source">المصدر: [3], [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 10 -->
+            <div class="question-block">
+                <div class="question-text">10. تعد الأقراص المدمجة (DVD) ومحركات أقراص USB من وسائل:</div>
+                <div class="options">
+                    <div class="option">أ) التسجيل</div>
+                    <div class="option">ب) الانتشار</div>
+                    <div class="option">ج) المعرفة</div>
+                    <div class="option">د) البيانات</div>
+                </div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(10)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint10">
+                        <div class="correct-answer">أ) التسجيل</div>
+                        <div class="explanation">التسجيل يشمل وسائل التخزين ونقل المعلومات مثل الورق، محركات أقراص USB، وأقراص DVD.</div>
+                        <div class="source">المصدر: [3], [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevPage()" disabled>
+                    <i class="fas fa-arrow-right"></i> السابق
+                </button>
+                <div class="page-indicator">الصفحة 1 من 6</div>
+                <button class="nav-btn" onclick="nextPage()">
+                    التالي <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- الصفحة 2: أسئلة صح وغلط -->
+        <div class="page" id="page2">
+            <div class="header">
+                <h1>اختبار مفاهيم المعلومات والبيانات</h1>
+                <h2>تصميم احترافي محسّن بتخطيط A4</h2>
+            </div>
+            
+            <div class="section-title">ثانياً: صح وغلط (10 أسئلة)</div>
+            
+            <!-- سؤال 1 -->
+            <div class="question-block">
+                <div class="question-text">1. البيانات هي حقائق تمثل باستخدام الأرقام أو الأحرف أو الرموز.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(11)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint11">
+                        <div class="correct-answer">صح</div>
+                        <div class="explanation">البيانات هي بالفعل حقائق يتم تمثيلها بالأرقام أو الأحرف أو الرموز.</div>
+                        <div class="source">المصدر: [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 2 -->
+            <div class="question-block">
+                <div class="question-text">2. تعد مقالات الصحف مثالاً على المعلومات الأولية.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(12)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint12">
+                        <div class="correct-answer">خطأ</div>
+                        <div class="explanation">مقالات الصحف تعد مثالاً على المعلومات الثانوية، بينما المعلومات الأولية تأتي من التجربة المباشرة أو البحث.</div>
+                        <div class="source">المصدر: [3], [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 3 -->
+            <div class="question-block">
+                <div class="question-text">3. خاصية الانتشار تعني إمكانية نسخ المعلومات بكميات كبيرة.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(13)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint13">
+                        <div class="correct-answer">خطأ</div>
+                        <div class="explanation">الانتشار يعني سهولة توصيل المعلومات ونشرها؛ الخاصية التي تعني النسخ بكميات كبيرة هي التكرار.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 4 -->
+            <div class="question-block">
+                <div class="question-text">4. المعرفة هي معلومات منظمة ومحللة بشكل منهجي للمساعدة في حل المشكلات.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(14)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint14">
+                        <div class="correct-answer">صح</div>
+                        <div class="explanation">المعرفة هي معلومات منظمة ومحللة للمساعدة في حل المشكلات.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 5 -->
+            <div class="question-block">
+                <div class="question-text">5. التحقق المتبادل هو عملية مقارنة المعلومات من مصادر متعددة.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(15)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint15">
+                        <div class="correct-answer">صح</div>
+                        <div class="explanation">التحقق المتبادل يعني مقارنة المعلومات من مصادر متعددة للتأكد من دقتها وموثوقيتها.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 6 -->
+            <div class="question-block">
+                <div class="question-text">6. تعتبر الملاحظة المباشرة نوعاً من المعلومات الثانوية.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(16)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint16">
+                        <div class="correct-answer">خطأ</div>
+                        <div class="explanation">الملاحظة المباشرة تعتبر نوعاً من المعلومات الأولية.</div>
+                        <div class="source">المصدر: [3], [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 7 -->
+            <div class="question-block">
+                <div class="question-text">7. الاستمرارية تعني أن المعلومات يمكن محوها بالكامل بمجرد إنشائها.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(17)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint17">
+                        <div class="correct-answer">خطأ</div>
+                        <div class="explanation">الاستمرارية (والتكرار) تعني صعوبة محو إنشاء المعلومات بالكامل بمجرد إنشائها.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 8 -->
+            <div class="question-block">
+                <div class="question-text">8. تشمل وسائل الإعلام التعبيرية النصوص والصور فقط ولا تشمل الوسائط السمعية.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(18)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint18">
+                        <div class="correct-answer">خطأ</div>
+                        <div class="explanation">وسائل الإعلام التعبيرية تشمل النصوص والصور.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 9 -->
+            <div class="question-block">
+                <div class="question-text">9. القدرة على تفسير المعلومات التي تم الحصول عليها من الوسائط بدقة تسمى خاصية الدقة.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(19)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint19">
+                        <div class="correct-answer">صح</div>
+                        <div class="explanation">الدقة هي القدرة على تفسير المعلومات التي تم الحصول عليها من الوسائط بدقة، كما تعني أنها مطابقة تماماً للأصلية.</div>
+                        <div class="source">المصدر: [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 10 -->
+            <div class="question-block">
+                <div class="question-text">10. جداول نتائج الاستبيانات وتفاصيل التجربة الشخصية المباشرة هي أمثلة للمعلومات الثانوية.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(20)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint20">
+                        <div class="correct-answer">خطأ</div>
+                        <div class="explanation">جداول نتائج الاستبيانات وتفاصيل التجارب الشخصية المباشرة هي أمثلة للمعلومات الأولية.</div>
+                        <div class="source">المصدر: [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevPage()">
+                    <i class="fas fa-arrow-right"></i> السابق
+                </button>
+                <div class="page-indicator">الصفحة 2 من 6</div>
+                <button class="nav-btn" onclick="nextPage()">
+                    التالي <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- الصفحة 3: أسئلة أكمل -->
+        <div class="page" id="page3">
+            <div class="header">
+                <h1>اختبار مفاهيم المعلومات والبيانات</h1>
+                <h2>تصميم احترافي محسّن بتخطيط A4</h2>
+            </div>
+            
+            <div class="section-title">ثالثاً: أكمل مكان النقط (10 أسئلة)</div>
+            
+            <!-- سؤال 1 -->
+            <div class="question-block">
+                <div class="question-text">1. تعد <span class="blank">_____</span> حقائق تمثل الأرقام أو الأحرف أو الرموز.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(21)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint21">
+                        <div class="correct-answer">البيانات</div>
+                        <div class="explanation">البيانات هي الحقائق التي تمثل بالأرقام أو الأحرف أو الرموز.</div>
+                        <div class="source">المصدر: [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 2 -->
+            <div class="question-block">
+                <div class="question-text">2. خاصية <span class="blank">_____</span> تعني إمكانية نسخ المعلومات بسهولة بكميات كبيرة.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(22)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint22">
+                        <div class="correct-answer">التكرار</div>
+                        <div class="explanation">خاصية التكرار تعني إمكانية نسخ المعلومات بسهولة بكميات كبيرة.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 3 -->
+            <div class="question-block">
+                <div class="question-text">3. يتم الحصول على المعلومات <span class="blank">_____</span> من خلال التجربة الشخصية المباشرة أو البحث والتجارب.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(23)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint23">
+                        <div class="correct-answer">الأولية</div>
+                        <div class="explanation">المعلومات الأولية يتم الحصول عليها مباشرة من خلال التجربة الشخصية أو البحث.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 4 -->
+            <div class="question-block">
+                <div class="question-text">4. تعد الكتب والصحف والتلفزيون من أمثلة <span class="blank">_____</span> التي يتم الحصول عليها من طرف ثالث.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(24)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint24">
+                        <div class="correct-answer">المعلومات الثانوية</div>
+                        <div class="explanation">الكتب والصحف والتلفزيون هي مصادر معلومات يتم الحصول عليها من طرف ثالث.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 5 -->
+            <div class="question-block">
+                <div class="question-text">5. التحقق المتبادل هي عملية مقارنة المعلومات من مصادر متعددة للتأكد من <span class="blank">_____</span>.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(25)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint25">
+                        <div class="correct-answer">دقتها وموثوقيتها</div>
+                        <div class="explanation">التحقق المتبادل يهدف إلى مقارنة المصادر لضمان دقة وموثوقية المعلومات قبل استخدامها.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 6 -->
+            <div class="question-block">
+                <div class="question-text">6. المعرفة هي المعلومات التي تم تحليلها وتنظيمها بشكل منهجي للمساعدة في <span class="blank">_____</span>.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(26)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint26">
+                        <div class="correct-answer">حل المشكلات</div>
+                        <div class="explanation">المعرفة هي معلومات منظمة للمساعدة في حل المشكلات.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 7 -->
+            <div class="question-block">
+                <div class="question-text">7. وسائل <span class="blank">_____</span> تشمل نقل المعلومات مثل الورق وأقراص DVD.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(27)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint27">
+                        <div class="correct-answer">التسجيل</div>
+                        <div class="explanation">وسائل التسجيل تشمل الورق وأقراص DVD وتستخدم لنقل المعلومات وتخزينها.</div>
+                        <div class="source">المصدر: [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 8 -->
+            <div class="question-block">
+                <div class="question-text">8. القدرة على تفسير المعلومات التي تم الحصول عليها من الوسائط بدقة هي خاصية <span class="blank">_____</span>.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(28)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint28">
+                        <div class="correct-answer">الدقة</div>
+                        <div class="explanation">الدقة هي القدرة على تفسير المعلومات التي تم الحصول عليها من الوسائط بدقة.</div>
+                        <div class="source">المصدر: [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 9 -->
+            <div class="question-block">
+                <div class="question-text">9. تعد <span class="blank">_____</span> من أمثلة المعلومات الأولية.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(29)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint29">
+                        <div class="correct-answer">تقارير التجارب</div>
+                        <div class="explanation">تقارير التجارب وجداول نتائج الاستبيانات هي أمثلة للمعلومات الأولية.</div>
+                        <div class="source">المصدر: [3], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 10 -->
+            <div class="question-block">
+                <div class="question-text">10. الوسائط هي وسائل <span class="blank">_____</span> المعلومات إلى الأفراد.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(30)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint30">
+                        <div class="correct-answer">لنقل</div>
+                        <div class="explanation">الوسائط هي وسائل لنقل المعلومات إلى الأفراد.</div>
+                        <div class="source">المصدر: [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevPage()">
+                    <i class="fas fa-arrow-right"></i> السابق
+                </button>
+                <div class="page-indicator">الصفحة 3 من 6</div>
+                <button class="nav-btn" onclick="nextPage()">
+                    التالي <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- الصفحة 4: أسئلة عرف -->
+        <div class="page" id="page4">
+            <div class="header">
+                <h1>اختبار مفاهيم المعلومات والبيانات</h1>
+                <h2>تصميم احترافي محسّن بتخطيط A4</h2>
+            </div>
+            
+            <div class="section-title">رابعاً: عرف (10 أسئلة)</div>
+            
+            <!-- سؤال 1 -->
+            <div class="question-block">
+                <div class="question-text">1. عرف البيانات (Data).</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(31)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint31">
+                        <div class="correct-answer">هي حقائق تمثل باستخدام الأرقام أو الأحرف أو الرموز، وهي بيانات خام لم يتم تنظيمها.</div>
+                        <div class="source">المصدر: [3], [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 2 -->
+            <div class="question-block">
+                <div class="question-text">2. عرف المعرفة (Knowledge).</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(32)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint32">
+                        <div class="correct-answer">هي معلومات تم تحليلها وتنظيمها بشكل منهجي للمساعدة في حل المشكلات.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 3 -->
+            <div class="question-block">
+                <div class="question-text">3. عرف خاصية التكرار (Redundancy/Repeatability).</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(33)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint33">
+                        <div class="correct-answer">خاصية تعني إمكانية نسخ المعلومات بسهولة بكميات كبيرة، وصعوبة محوها بالكامل بمجرد إنشائها.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 4 -->
+            <div class="question-block">
+                <div class="question-text">4. ما المقصود بالمعلومات الأولية (Primary Information).</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(34)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint34">
+                        <div class="correct-answer">هي المعلومات التي يتم الحصول عليها من خلال التجربة الشخصية المباشرة أو البحث والتجارب.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 5 -->
+            <div class="question-block">
+                <div class="question-text">5. ما المقصود بالمعلومات الثانوية (Secondary Information).</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(35)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint35">
+                        <div class="correct-answer">هي المعلومات التي يتم الحصول عليها من خلال طرف ثالث، مثل الكتب والصحف والتلفزيون.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 6 -->
+            <div class="question-block">
+                <div class="question-text">6. عرف عملية التحقق المتبادل.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(36)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint36">
+                        <div class="correct-answer">عملية مقارنة المعلومات من مصادر متعددة للتأكد من دقتها وموثوقيتها واستخدامها في اتخاذ القرارات.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 7 -->
+            <div class="question-block">
+                <div class="question-text">7. ما هي خاصية الانتشار (Ease of Distribution).</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(37)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint37">
+                        <div class="correct-answer">تعني سهولة توصيل المعلومات ونشرها عبر وسائل الإعلام والإنترنت والبريد.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 8 -->
+            <div class="question-block">
+                <div class="question-text">8. ماذا تشمل وسائل الإعلام التعبيرية؟</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(38)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint38">
+                        <div class="correct-answer">تشمل النصوص والصور.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 9 -->
+            <div class="question-block">
+                <div class="question-text">9. ما المقصود بـ "الاستمرارية"؟</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(39)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint39">
+                        <div class="correct-answer">هي خاصية تعني صعوبة محو أو إلغاء إنشاء المعلومات كلياً بمجرد إنشائها.</div>
+                        <div class="source">المصدر: [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 10 -->
+            <div class="question-block">
+                <div class="question-text">10. عرف البيانات الخام (Raw Data).</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(40)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint40">
+                        <div class="correct-answer">هي حقائق تمثل بالأرقام أو الأحرف أو الرموز، وهي في شكلها الذي لم يتم تنظيمه.</div>
+                        <div class="source">المصدر: [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevPage()">
+                    <i class="fas fa-arrow-right"></i> السابق
+                </button>
+                <div class="page-indicator">الصفحة 4 من 6</div>
+                <button class="nav-btn" onclick="nextPage()">
+                    التالي <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- الصفحة 5: أسئلة اذكر السبب -->
+        <div class="page" id="page5">
+            <div class="header">
+                <h1>اختبار مفاهيم المعلومات والبيانات</h1>
+                <h2>تصميم احترافي محسّن بتخطيط A4</h2>
+            </div>
+            
+            <div class="section-title">خامساً: اذكر السبب (10 أسئلة)</div>
+            
+            <!-- سؤال 1 -->
+            <div class="question-block">
+                <div class="question-text">1. اذكر السبب في أهمية إجراء عملية التحقق المتبادل عند التعامل مع المعلومات.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(41)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint41">
+                        <div class="correct-answer">للتأكد من دقتها وموثوقيتها، واستخدامها في اتخاذ القرارات.</div>
+                        <div class="explanation">التحقق المتبادل يضمن صحة المعلومات.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 2 -->
+            <div class="question-block">
+                <div class="question-text">2. اذكر السبب في أن الكتب والصحف والتلفزيون تُعد مصادر معلومات ثانوية.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(42)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint42">
+                        <div class="correct-answer">لأنها معلومات يتم الحصول عليها من خلال طرف ثالث (وليس من مصدر مباشر).</div>
+                        <div class="explanation">المعلومات الثانوية تنقل عن طريق وسيط.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 3 -->
+            <div class="question-block">
+                <div class="question-text">3. اذكر السبب في أن المعلومات يجب أن تكون ذات معنى أو قيمة للمتلقي.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(43)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint43">
+                        <div class="correct-answer">لكي تستخدم لاتخاذ القرار.</div>
+                        <div class="explanation">الهدف من المعلومات هو دعم عملية اتخاذ القرار.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 4 -->
+            <div class="question-block">
+                <div class="question-text">4. اذكر السبب في صعوبة محو المعلومات كلياً بعد إنشائها.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(44)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint44">
+                        <div class="correct-answer">بسبب خاصية التكرار، التي تعني أنه لا يمكن محو إنشاء المعلومات بالكامل بمجرد إنشائها.</div>
+                        <div class="explanation">خاصية التكرار تجعل المعلومات مقاومة للمحو التام.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 5 -->
+            <div class="question-block">
+                <div class="question-text">5. اذكر السبب في كون تقارير التجارب والملاحظات المباشرة تُعد معلومات أولية.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(45)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint45">
+                        <div class="correct-answer">لأنه يتم الحصول عليها من خلال التجربة الشخصية المباشرة أو البحث والتجارب.</div>
+                        <div class="explanation">المصادر الأولية هي الناتجة عن الملاحظة المباشرة والبحث.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 6 -->
+            <div class="question-block">
+                <div class="question-text">6. اذكر السبب في أن البيانات وحدها غير كافية لحل المشكلات.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(46)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint46">
+                        <div class="correct-answer">لأن البيانات هي حقائق خام لم يتم تنظيمها، ويجب تحليلها وتنظيمها (لتصبح معرفة) للمساعدة في حل المشكلات.</div>
+                        <div class="explanation">البيانات تحتاج لمعالجة لتصبح معرفة مفيدة.</div>
+                        <div class="source">المصدر: [1], [2]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 7 -->
+            <div class="question-block">
+                <div class="question-text">7. اذكر السبب في أن الإنترنت والبريد يُعدان من وسائل نقل المعلومات.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(47)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint47">
+                        <div class="correct-answer">لأنهما من وسائل نقل المعلومات ونشرها (خاصية الانتشار) إلى الأفراد.</div>
+                        <div class="explanation">الوسائط (مثل الإنترنت والبريد) تسهل توصيل المعلومات.</div>
+                        <div class="source">المصدر: [3], [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 8 -->
+            <div class="question-block">
+                <div class="question-text">8. اذكر السبب في أهمية خاصية الدقة للمعلومات.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(48)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint48">
+                        <div class="correct-answer">لأن الدقة تعني أن المعلومات يجب أن تكون مطابقة تماماً للأصلية، والقدرة على تفسيرها بدقة.</div>
+                        <div class="explanation">الدقة تضمن جودة المعلومات وعدم تحريفها.</div>
+                        <div class="source">المصدر: [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 9 -->
+            <div class="question-block">
+                <div class="question-text">9. اذكر السبب في كون التسجيل مهمًا في التعامل مع البيانات.</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(49)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint49">
+                        <div class="correct-answer">لأن التسجيل يشمل وسائل نقل المعلومات وتخزينها مثل الورق، ومحركات أقراص USB، وأقراص DVD.</div>
+                        <div class="explanation">التسجيل يضمن بقاء المعلومات وإمكانية نقلها.</div>
+                        <div class="source">المصدر: [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- سؤال 10 -->
+            <div class="question-block">
+                <div class="question-text">10. اذكر السبب في أن المعلومات يجب أن تكون "متطابقة تماماً للأصلية".</div>
+                <div class="answer-hint">
+                    <button class="hint-toggle" onclick="toggleHint(50)">
+                        <i class="fas fa-lightbulb"></i> عرض الإجابة
+                    </button>
+                    <div class="hint-content" id="hint50">
+                        <div class="correct-answer">لأن هذا الشرط هو جزء أساسي من خاصية الدقة.</div>
+                        <div class="explanation">الدقة هي معيار تطابق المعلومة مع أصلها.</div>
+                        <div class="source">المصدر: [1]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevPage()">
+                    <i class="fas fa-arrow-right"></i> السابق
+                </button>
+                <div class="page-indicator">الصفحة 5 من 6</div>
+                <button class="nav-btn" onclick="nextPage()">
+                    التالي <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- الصفحة 6: المعلومات التصميمية -->
+        <div class="page" id="page6">
+            <div class="header">
+                <h1>اختبار مفاهيم المعلومات والبيانات</h1>
+                <h2>تصميم احترافي محسّن بتخطيط A4</h2>
+            </div>
+            
+            <div class="section-title">معلومات التصميم والمراجع</div>
+            
+            <div class="question-block">
+                <div class="question-text">خصائص التصميم المطبق:</div>
+                <div class="options">
+                    <div class="option">1. تصميم احترافي بتنسيق A4 متجاوب مع تحسينات بصرية</div>
+                    <div class="option">2. استخدام خطوط عربية راقية ومتنوعة (Mirza, El Messiri, Lateef, Amiri)</div>
+                    <div class="option">3. تصميم محيطي بحدود إبداعية وزوايا ملونة</div>
+                    <div class="option">4. خلفية متدرجة ملونة تعزز تجربة المستخدم</div>
+                    <div class="option">5. آلية تنقل سلسة بين الصفحات مع تأثيرات تفاعلية</div>
+                    <div class="option">6. إجابات مخفية تظهر بالنقر عليها</div>
+                    <div class="option">7. أسئلة بخط أزرق سميك (22px، خط Mirza)</div>
+                    <div class="option">8. إجابات بخط أحمر مميز (20px، خط Lateef)</div>
+                </div>
+            </div>
+            
+            <div class="section-title">مراجع الأسئلة:</div>
+            
+            <div class="explanation">
+                <p>تم تصميم الأسئلة بناءً على المصادر التالية:</p>
+                <ul style="margin-right: 20px; margin-top: 10px;">
+                    <li>[1] مرجع أساسي في نظم المعلومات</li>
+                    <li>[2] كتاب مفاهيم تكنولوجيا المعلومات</li>
+                    <li>[3] مصادر تعليمية في علم البيانات</li>
+                </ul>
+            </div>
+            
+            <div class="footer">
+                <p>تم تصميم هذه الواجهة وتنفيذها بدقة احترافية</p>
+                <div class="designer-info">
+                    <i class="fas fa-user-tie"></i>
+                    <div>
+                        <div class="designer-name">المهندس محمد شاهين</div>
+                        <div class="designer-phone">📱 01029966799</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; font-size: 18px; color: #5c6bc0;">جميع الحقوق محفوظة © 2023</p>
+            </div>
+            
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevPage()">
+                    <i class="fas fa-arrow-right"></i> السابق
+                </button>
+                <div class="page-indicator">الصفحة 6 من 6</div>
+                <button class="nav-btn" onclick="nextPage()" disabled>
+                    التالي <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // متغيرات التحكم في الصفحات
+        let currentPage = 1;
+        const totalPages = 6;
+        
+        // وظيفة لعرض/إخفاء التلميح
+        function toggleHint(hintNumber) {
+            const hint = document.getElementById(`hint${hintNumber}`);
+            hint.classList.toggle('show');
+        }
+        
+        // وظيفة للانتقال للصفحة التالية
+        function nextPage() {
+            if (currentPage < totalPages) {
+                document.getElementById(`page${currentPage}`).classList.remove('active');
+                currentPage++;
+                document.getElementById(`page${currentPage}`).classList.add('active');
+                updateNavigationButtons();
+                updatePageIndicator();
+                closeAllHints();
+            }
+        }
+        
+        // وظيفة للانتقال للصفحة السابقة
+        function prevPage() {
+            if (currentPage > 1) {
+                document.getElementById(`page${currentPage}`).classList.remove('active');
+                currentPage--;
+                document.getElementById(`page${currentPage}`).classList.add('active');
+                updateNavigationButtons();
+                updatePageIndicator();
+                closeAllHints();
+            }
+        }
+        
+        // تحديث أزرار التنقل
+        function updateNavigationButtons() {
+            // في التطبيق الحقيقي، سيتم تحديث أزرار الصفحات الفردية
+            // لكننا هنا نعتمد على التحديث عبر JavaScript في وقت التشغيل
+        }
+        
+        // تحديث مؤشر الصفحة
+        function updatePageIndicator() {
+            const indicators = document.querySelectorAll('.page-indicator');
+            indicators.forEach(indicator => {
+                indicator.textContent = `الصفحة ${currentPage} من ${totalPages}`;
+            });
+        }
+        
+        // إغلاق جميع التلميحات
+        function closeAllHints() {
+            const hints = document.querySelectorAll('.hint-content');
+            hints.forEach(hint => {
+                hint.classList.remove('show');
+            });
+        }
+        
+        // إضافة إمكانية التنقل باستخدام لوحة المفاتيح
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === 'Right') {
+                prevPage();
+            } else if (event.key === 'ArrowLeft' || event.key === 'Left') {
+                nextPage();
+            }
+        });
+        
+        // تهيئة مؤشر الصفحة عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePageIndicator();
+        });
+    </script>
+</body>
+</html>
