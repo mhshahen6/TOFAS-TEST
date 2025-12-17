@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مدرسة الشهيد أحمد مالك الثانوية</title>
+
+  <!-- Google Font from second file -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ====== الهوية العامة (مستخلصة من الملف الثاني) ====== */
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0a3d62, #1976d2);
+      color: #fff;
+      padding: 25px;
+      text-align: center;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ====== Hero Section ====== */
+    .hero {
+      padding: 70px 20px;
+      background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)),
+                  url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1');
+      background-size: cover;
+      text-align: center;
+      color: #fff;
+    }
+
+    .hero h2 { font-size: 36px; }
+    .hero p { font-size: 20px; }
+
+    /* ====== الأقسام ====== */
+    .section {
+      max-width: 1100px;
+      margin: auto;
+      padding: 50px 20px;
+    }
+
+    .section h2 {
+      color: #00bcd4;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    /* ====== نظام البطاقات (من الملف الثاني) ====== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      padding: 30px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+    }
+
+    .card h3 { color: #2e7d32; }
+
+    /* ألوان مختلفة للبطاقات */
+    .card.programming { border-right: 6px solid #2196f3; }
+    .card.ai { border-right: 6px solid #d32f2f; }
+    .card.stem { border-right: 6px solid #388e3c; }
+
+    /* ====== نموذج التواصل ====== */
+    form input, form textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    button {
+      background-color: #00bcd4;
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover { background-color: #0097a7; }
+
+    /* ====== Footer ====== */
+    footer {
+      background: #222;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>مدرسة الشهيد أحمد مالك الثانوية</h1>
+  <nav>
+    <a href="#home">الرئيسية</a>
+    <a href="#about">عن المدرسة</a>
+    <a href="#programs">البرامج</a>
+    <a href="#contact">التواصل</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h2>نُعِد قادة المستقبل</h2>
+  <p>تعليم حديث • مهارات رقمية • برمجة وذكاء اصطناعي</p>
+</section>
+
+<section class="section" id="about">
+  <h2>عن المدرسة</h2>
+  <p style="text-align:center; font-size:18px;">
+    مدرسة الشهيد أحمد مالك الثانوية تسعى لبناء جيل واعٍ يمتلك مهارات القرن الحادي والعشرين
+    من خلال التعليم التفاعلي والتقني.
+  </p>
+</section>
+
+<section class="section" id="programs">
+  <h2>برامجنا التعليمية</h2>
+  <div class="cards">
+    <div class="card programming">
+      <h3>البرمجة</h3>
+      <p>HTML – CSS – JavaScript – Python</p>
+    </div>
+    <div class="card ai">
+      <h3>الذكاء الاصطناعي</h3>
+      <p>AI Basics – Machine Learning</p>
+    </div>
+    <div class="card stem">
+      <h3>STEM</h3>
+      <p>علوم – رياضيات – تكنولوجيا</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <h2>تواصل معنا</h2>
+  <form onsubmit="sendMessage(event)">
+    <input type="text" placeholder="الاسم" required>
+    <input type="email" placeholder="البريد الإلكتروني" required>
+    <textarea placeholder="رسالتك"></textarea>
+    <button type="submit">إرسال</button>
+  </form>
+</section>
+
+<footer>
+  <p>© 2025 مدرسة الشهيد أحمد مالك الثانوية – Developed by Students</p>
+</footer>
+
+<script>
+  function sendMessage(e) {
+    e.preventDefault();
+    alert('تم إرسال رسالتك بنجاح');
+  }
+</script>
+
+</body>
+</html>
