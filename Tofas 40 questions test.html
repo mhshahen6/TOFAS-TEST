@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار TOFAS التفاعلي - JavaScript</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary-blue: #1a2a6c;
+  --primary-red: #b21f1f;
+  --primary-yellow: #fdbb2d;
+  --light-blue: #e6f2ff;
+  --light-green: #e8f5e9;
+  --light-pink: #fce4ec;
+  --light-purple: #f3e5f5;
+  --cyan: #00bcd4;
+  --green: #27ae60;
+  --dark-green: #2e7d32;
+  --red: #c0392b;
+  --purple: #9c27b0;
+  --gray: #f4f7f6;
+  --dark-gray: #333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--gray);
+  font-family: 'Cairo', sans-serif;
+  color: var(--dark-gray);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* شريط التقدم والتوقيت */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 15px 25px;
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.progress, .timer {
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 22px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.progress {
+  background: var(--primary-red);
+}
+
+.timer {
+  background: var(--primary-yellow);
+  color: #000;
+}
+
+/* العنوان الرئيسي */
+.header {
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-red), var(--primary-yellow));
+  color: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.header h1 {
+  font-size: 38px;
+  font-weight: 900;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.header p {
+  font-size: 22px;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+/* البطاقات - الأنماط المختلفة */
+.q-card {
+  background: white;
+  margin: 40px 0;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  position: relative;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  transform: translateY(25px);
+  opacity: 0;
+  border-top: 8px solid var(--primary-blue);
+  page-break-inside: avoid;
+}
+
+.q-card.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* نمط بطاقة الإسناد */
+.assign-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fdff 100%);
+  border: 3px solid var(--cyan);
+  border-top: 8px solid var(--cyan);
+}
+
+.assign-card::before {
+  content: "🎯";
+  position: absolute;
+  top: -15px;
+  right: 30px;
+  font-size: 30px;
+  background: white;
+  padding: 0 15px;
+}
+
+/* نمط بطاقة التحديد */
+.type-card {
+  background: var(--light-blue);
+  border: 3px double var(--primary-blue);
+  border-top: 8px solid var(--primary-blue);
+}
+
+.type-card::before {
+  content: "📝";
+  position: absolute;
+  top: -15px;
+  right: 30px;
+  font-size: 30px;
+  background: white;
+  padding: 0 15px;
+  border-radius: 50%;
+}
+
+/* نمط بطاقة المقارنة */
+.compare-card {
+  background: var(--light-pink);
+  border: 3px solid var(--red);
+  border-top: 8px solid var(--red);
+}
+
+.compare-card::before {
+  content: "⚖️";
+  position: absolute;
+  top: -15px;
+  right: 30px;
+  font-size: 30px;
+  background: white;
+  padding: 0 15px;
+  border-radius: 50%;
+}
+
+/* نمط بطاقة التحويل */
+.convert-card {
+  background: linear-gradient(135deg, var(--light-green), #e0f7fa);
+  border: 3px dotted var(--dark-green);
+  border-top: 8px solid var(--dark-green);
+}
+
+.convert-card::before {
+  content: "🔄";
+  position: absolute;
+  top: -15px;
+  right: 30px;
+  font-size: 30px;
+  background: white;
+  padding: 0 15px;
+  border-radius: 50%;
+}
+
+/* نمط بطاقة الملخص */
+.summary-card {
+  background: var(--light-purple);
+  border: 3px solid var(--purple);
+  border-top: 8px solid var(--purple);
+}
+
+.summary-card::before {
+  content: "📊";
+  position: absolute;
+  top: -15px;
+  right: 30px;
+  font-size: 30px;
+  background: white;
+  padding: 0 15px;
+  border-radius: 50%;
+}
+
+/* رقم السؤال */
+.q-num {
+  position: absolute;
+  top: -25px;
+  right: -25px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-yellow));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 28px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 10;
+}
+
+/* نص السؤال */
+.question {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--primary-blue);
+  margin-bottom: 40px;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+/* كود البرمجة */
+.code-box {
+  background: #1e1e1e;
+  color: #00d8ff;
+  padding: 25px;
+  border-radius: 12px;
+  margin: 30px 0;
+  font-family: 'Consolas', 'Monaco', monospace;
+  direction: ltr;
+  font-size: 22px;
+  line-height: 1.6;
+  border-left: 5px solid var(--cyan);
+  overflow-x: auto;
+}
+
+/* الخيارات */
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.option {
+  padding: 30px 25px;
+  border: 3px solid #ddd;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--dark-gray);
+  transition: all 0.3s ease;
+  text-align: center;
+  background: white;
+}
+
+.option:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  border-color: var(--primary-blue);
+}
+
+.option.correct {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+  box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
+}
+
+.option.wrong {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+  box-shadow: 0 8px 20px rgba(192, 57, 43, 0.3);
+}
+
+/* التلميح */
+.hint {
+  display: none;
+  margin-top: 35px;
+  padding: 25px;
+  font-size: 24px;
+  font-weight: 700;
+  background: #fffde7;
+  border-top: 4px dashed var(--primary-yellow);
+  border-radius: 15px;
+  color: #5d4037;
+  text-align: justify;
+}
+
+.show-hint {
+  margin-top: 25px;
+  background: linear-gradient(135deg, var(--primary-blue), var(--cyan));
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 800;
+  transition: all 0.3s ease;
+  display: block;
+  width: fit-content;
+}
+
+.show-hint:hover {
+  background: linear-gradient(135deg, var(--primary-red), var(--primary-yellow));
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* التذييل */
+.footer {
+  text-align: center;
+  margin: 60px 0 40px;
+  padding: 30px;
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  border-radius: 20px;
+  border-top: 5px solid var(--primary-red);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.designer-info {
+  font-weight: 900;
+  color: var(--primary-red);
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.copyright {
+  font-weight: 600;
+  color: var(--primary-blue);
+  font-size: 20px;
+}
+
+/* الطباعة */
+@media print {
+  @page {
+    margin: 2cm;
+    size: A4;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt !important;
+    line-height: 1.4 !important;
+  }
+  
+  .container {
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  
+  .top-bar, .show-hint, .header {
+    display: none !important;
+  }
+  
+  .q-card {
+    page-break-inside: avoid !important;
+    page-break-after: always !important;
+    box-shadow: none !important;
+    margin: 0 0 40px 0 !important;
+    padding: 40px !important;
+    border: 2px solid #000 !important;
+    width: 100% !important;
+    max-width: 800px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    position: relative !important;
+  }
+  
+  .question {
+    font-size: 18pt !important;
+    color: black !important;
+  }
+  
+  .code-box {
+    background: #f8f9fa !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+    font-size: 11pt !important;
+  }
+  
+  .options {
+    display: block !important;
+  }
+  
+  .option {
+    border: 2px solid #000 !important;
+    color: black !important;
+    background: white !important;
+    margin-bottom: 15px !important;
+    padding: 20px !important;
+    font-size: 12pt !important;
+  }
+  
+  .hint {
+    background: #f8f9fa !important;
+    color: #666 !important;
+    border: 1px dashed #999 !important;
+    font-size: 11pt !important;
+  }
+  
+  /* تذييل الطباعة في كل صفحة */
+  .q-card::after {
+    content: "مصمم الاختبار: المهندس محمد محمود شاهين - 01029966799";
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: bold;
+    color: #666;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+  }
+  
+  .footer {
+    display: none !important;
+  }
+}
+
+/* تحسينات للهواتف */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  
+  .header h1 {
+    font-size: 28px;
+  }
+  
+  .question {
+    font-size: 26px;
+  }
+  
+  .options {
+    grid-template-columns: 1fr;
+  }
+  
+  .option {
+    font-size: 22px;
+    padding: 20px;
+  }
+  
+  .code-box {
+    font-size: 18px;
+    padding: 15px;
+  }
+  
+  .q-num {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    top: -20px;
+    right: -20px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <div class="progress" id="progress">السؤال 1 / 40</div>
+    <div class="timer" id="timer">40:00</div>
+  </div>
+
+  <div class="header">
+    <h1>اختبار TOFAS التفاعلي – JavaScript</h1>
+    <p>الموضوع: أساسيات JavaScript | المستوى: متوسط | عدد الأسئلة: 40</p>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div class="footer">
+    <div class="designer-info">م. محمد محمود شاهين</div>
+    <div class="copyright">01029966799 | جميع الحقوق محفوظة © 2024</div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  // الأسئلة من 1 إلى 10 - بطاقة إسناد
+  {id:1, question_text:"ما ناتج تنفيذ الكود التالي؟", code_snippet:"let x = 5;\nx++;\nconsole.log(x);", options:[{text:"5",correct:false},{text:"6",correct:true},{text:"4",correct:false},{text:"undefined",correct:false}], hint:"++ يزيد القيمة بمقدار واحد.", type:"assign"},
+  {id:2, question_text:"ما نوع البيانات الناتج؟", code_snippet:"typeof(10 + '5')", options:[{text:"number",correct:false},{text:"string",correct:true},{text:"boolean",correct:false},{text:"object",correct:false}], hint:"الجمع مع نص يحول الناتج لنص.", type:"assign"},
+  {id:3, question_text:"ما هي الطريقة الصحيحة لإعلان دالة؟", code_snippet:"", options:[{text:"function myFunc()",correct:true},{text:"func myFunc()",correct:false},{text:"define myFunc()",correct:false},{text:"fun myFunc()",correct:false}], hint:"استخدم كلمة function لإعلان الدوال.", type:"assign"},
+  {id:4, question_text:"ما الناتج من console.log(2 + 3 + '5')؟", code_snippet:"", options:[{text:"55",correct:false},{text:"25",correct:false},{text:"5",correct:false},{text:"235",correct:true}], hint:"الجمع بين أرقام ونص يحوّل الأرقام الأولى لجمع ثم النص يُضاف.", type:"assign"},
+  {id:5, question_text:"ما الفرق بين == و === في JavaScript؟", code_snippet:"", options:[{text:"== يقارن القيم فقط",correct:true},{text:"=== يقارن القيم فقط",correct:false},{text:"== يقارن القيم والنوع",correct:false},{text:"لا يوجد فرق",correct:false}], hint:"== يقارن القيم بدون النوع، === يقارن القيم والنوع.", type:"compare"},
+  {id:6, question_text:"ما هو الناتج؟", code_snippet:"console.log('5' - 2);", options:[{text:"3",correct:true},{text:"52",correct:false},{text:"NaN",correct:false},{text:"undefined",correct:false}], hint:"الطرح يحوّل النص لرقم إذا كان صالحاً.", type:"convert"},
+  {id:7, question_text:"ما نوع المصفوفة التالية؟", code_snippet:"let arr = [1, 2, 3];", options:[{text:"object",correct:true},{text:"array",correct:false},{text:"string",correct:false},{text:"number",correct:false}], hint:"المصفوفات تعتبر نوع object في JavaScript.", type:"type"},
+  {id:8, question_text:"ما الناتج من console.log(Boolean(0));", code_snippet:"", options:[{text:"true",correct:false},{text:"false",correct:true},{text:"0",correct:false},{text:"undefined",correct:false}], hint:"0 يتحوّل لقيمة false في Boolean.", type:"convert"},
+  {id:9, question_text:"ما هو الناتج؟", code_snippet:"console.log('Hello' + ' ' + 'World');", options:[{text:"HelloWorld",correct:false},{text:"Hello World",correct:true},{text:"Hello World!",correct:false},{text:"Error",correct:false}], hint:"+ يدمج النصوص كما هي.", type:"assign"},
+  {id:10, question_text:"ما الناتج؟", code_snippet:"console.log(typeof null);", options:[{text:"object",correct:true},{text:"null",correct:false},{text:"undefined",correct:false},{text:"number",correct:false}], hint:"null نوعه object في JavaScript.", type:"type"},
+
+  // الأسئلة من 11 إلى 20 - بطاقات متنوعة
+  {id:11, question_text:"ما ناتج console.log(3 + 4 * 2)؟", code_snippet:"", options:[{text:"14",correct:false},{text:"11",correct:true},{text:"10",correct:false},{text:"9",correct:false}], hint:"يتم تنفيذ الضرب قبل الجمع.", type:"assign"},
+  {id:12, question_text:"ما هي نتيجة هذا الكود؟", code_snippet:"let a = '5';\nlet b = 2;\nconsole.log(a * b);", options:[{text:"52",correct:false},{text:"7",correct:false},{text:"10",correct:true},{text:"NaN",correct:false}], hint:"عند الضرب، يتم تحويل النص '5' إلى الرقم 5.", type:"convert"},
+  {id:13, question_text:"ما هو الناتج؟", code_snippet:"console.log(typeof undefined);", options:[{text:"undefined",correct:true},{text:"null",correct:false},{text:"object",correct:false},{text:"string",correct:false}], hint:"undefined هو نوع بيانات خاص في JavaScript.", type:"type"},
+  {id:14, question_text:"ما هي قيمة x بعد تنفيذ هذا الكود؟", code_snippet:"let x = 10;\nx += 5;\nx *= 2;", options:[{text:"15",correct:false},{text:"20",correct:false},{text:"30",correct:true},{text:"25",correct:false}], hint:"x += 5 تعني x = x + 5، ثم x *= 2 تعني x = x * 2.", type:"assign"},
+  {id:15, question_text:"ما ناتج console.log('10' == 10)؟", code_snippet:"", options:[{text:"true",correct:true},{text:"false",correct:false},{text:"undefined",correct:false},{text:"error",correct:false}], hint:"== تقوم بتحويل النوع تلقائيًا للمقارنة.", type:"compare"},
+  {id:16, question_text:"ما ناتج console.log('10' === 10)؟", code_snippet:"", options:[{text:"true",correct:false},{text:"false",correct:true},{text:"undefined",correct:false},{text:"error",correct:false}], hint:"=== تقارن القيمة والنوع بدون تحويل.", type:"compare"},
+  {id:17, question_text:"ما هو الناتج؟", code_snippet:"console.log(!!'Hello');", options:[{text:"true",correct:true},{text:"false",correct:false},{text:"Hello",correct:false},{text:"undefined",correct:false}], hint:"!! تحول القيمة إلى Boolean، أي نص غير فارغ يصبح true.", type:"convert"},
+  {id:18, question_text:"ما ناتج console.log(2 ** 3)؟", code_snippet:"", options:[{text:"6",correct:false},{text:"8",correct:true},{text:"9",correct:false},{text:"5",correct:false}], hint:"** هو عامل الأس، يعني 2 مرفوعة للقوة 3.", type:"assign"},
+  {id:19, question_text:"ما قيمة y بعد التنفيذ؟", code_snippet:"let y = 10;\ny %= 3;", options:[{text:"1",correct:true},{text:"3",correct:false},{text:"0",correct:false},{text:"10",correct:false}], hint:"% هو عامل الباقي، y %= 3 تعني y = y % 3.", type:"assign"},
+  {id:20, question_text:"ما هو الناتج؟", code_snippet:"console.log(parseInt('12.5px'));", options:[{text:"12.5",correct:false},{text:"12",correct:true},{text:"NaN",correct:false},{text:"px",correct:false}], hint:"parseInt() تقرأ الرقم من البداية حتى تصل إلى حرف غير رقمي.", type:"convert"},
+
+  // الأسئلة من 21 إلى 30 - بطاقات متنوعة
+  {id:21, question_text:"ما ناتج console.log(Math.floor(7.8))؟", code_snippet:"", options:[{text:"7",correct:true},{text:"8",correct:false},{text:"7.8",correct:false},{text:"7.0",correct:false}], hint:"Math.floor() تقرب لأسفل إلى أقرب عدد صحيح.", type:"convert"},
+  {id:22, question_text:"ما ناتج console.log(Math.ceil(4.2))؟", code_snippet:"", options:[{text:"4",correct:false},{text:"5",correct:true},{text:"4.2",correct:false},{text:"4.0",correct:false}], hint:"Math.ceil() تقرب لأعلى إلى أقرب عدد صحيح.", type:"convert"},
+  {id:23, question_text:"ما هو الناتج؟", code_snippet:"console.log(0.1 + 0.2 === 0.3);", options:[{text:"true",correct:false},{text:"false",correct:true},{text:"undefined",correct:false},{text:"error",correct:false}], hint:"JavaScript تعاني من مشاكل دقة في الأعداد العشرية.", type:"compare"},
+  {id:24, question_text:"ما ناتج console.log('Hello'.length)؟", code_snippet:"", options:[{text:"4",correct:false},{text:"5",correct:true},{text:"6",correct:false},{text:"undefined",correct:false}], hint:"خاصية length تعطي عدد أحرف النص.", type:"assign"},
+  {id:25, question_text:"ما قيمة z بعد التنفيذ؟", code_snippet:"let z = 5;\nz = z > 3 ? 'Big' : 'Small';", options:[{text:"5",correct:false},{text:"Big",correct:true},{text:"Small",correct:false},{text:"true",correct:false}], hint:"العامل الشرطي الثلاثي يعيد 'Big' إذا كانت z > 3 صحيحة.", type:"assign"},
+  {id:26, question_text:"ما ناتج console.log(5 > 3 && 2 < 1)؟", code_snippet:"", options:[{text:"true",correct:false},{text:"false",correct:true},{text:"undefined",correct:false},{text:"error",correct:false}], hint:"&& تعني AND، تكون النتيجة true فقط إذا كان كلا الطرفين true.", type:"compare"},
+  {id:27, question_text:"ما ناتج console.log(5 > 3 || 2 < 1)؟", code_snippet:"", options:[{text:"true",correct:true},{text:"false",correct:false},{text:"undefined",correct:false},{text:"error",correct:false}], hint:"|| تعني OR، تكون النتيجة true إذا كان أحد الطرفين true على الأقل.", type:"compare"},
+  {id:28, question_text:"ما ناتج console.log(!true)؟", code_snippet:"", options:[{text:"true",correct:false},{text:"false",correct:true},{text:"undefined",correct:false},{text:"error",correct:false}], hint:"! تعني NOT، تعكس القيمة المنطقية.", type:"convert"},
+  {id:29, question_text:"ما قيمة arr بعد التنفيذ؟", code_snippet:"let arr = [1, 2];\narr.push(3);", options:[{text:"[1, 2]",correct:false},{text:"[1, 2, 3]",correct:true},{text:"[3, 1, 2]",correct:false},{text:"[1, 3, 2]",correct:false}], hint:"push() تضيف عنصرًا إلى نهاية المصفوفة.", type:"assign"},
+  {id:30, question_text:"ما ناتج console.log([1, 2, 3].pop())؟", code_snippet:"", options:[{text:"1",correct:false},{text:"2",correct:false},{text:"3",correct:true},{text:"undefined",correct:false}], hint:"pop() تزيل العنصر الأخير من المصفوفة وتعيده.", type:"assign"},
+
+  // الأسئلة من 31 إلى 40 - بطاقات متنوعة
+  {id:31, question_text:"ما ناتج console.log('Hello'.toUpperCase())؟", code_snippet:"", options:[{text:"hello",correct:false},{text:"HELLO",correct:true},{text:"Hello",correct:false},{text:"hELLO",correct:false}], hint:"toUpperCase() تحول النص إلى أحرف كبيرة.", type:"convert"},
+  {id:32, question_text:"ما هو الناتج؟", code_snippet:"console.log(Array.isArray([1, 2]));", options:[{text:"true",correct:true},{text:"false",correct:false},{text:"array",correct:false},{text:"undefined",correct:false}], hint:"Array.isArray() تتحقق إذا كان المتغير مصفوفة.", type:"type"},
+  {id:33, question_text:"ما ناتج console.log(typeof NaN)؟", code_snippet:"", options:[{text:"number",correct:true},{text:"NaN",correct:false},{text:"undefined",correct:false},{text:"object",correct:false}], hint:"NaN تعني 'Not a Number' ولكن نوعها number في JavaScript.", type:"type"},
+  {id:34, question_text:"ما هو الناتج؟", code_snippet:"console.log(isNaN('Hello'));", options:[{text:"true",correct:true},{text:"false",correct:false},{text:"undefined",correct:false},{text:"error",correct:false}], hint:"isNaN() تتحقق إذا كانت القيمة ليست رقمًا.", type:"convert"},
+  {id:35, question_text:"ما ناتج console.log(2 > '10')؟", code_snippet:"", options:[{text:"true",correct:false},{text:"false",correct:true},{text:"undefined",correct:false},{text:"error",correct:false}], hint:"عند المقارنة، يتم تحويل '10' إلى 10، فتصبح 2 > 10.", type:"compare"},
+  {id:36, question_text:"ما هو الناتج؟", code_snippet:"console.log('b' + 'a' + + 'a' + 'a');", options:[{text:"baaa",correct:false},{text:"baNaN",correct:false},{text:"baNaNa",correct:true},{text:"error",correct:false}], hint:"+ 'a' يحاول تحويل 'a' إلى رقم فيصبح NaN.", type:"assign"},
+  {id:37, question_text:"ما قيمة num بعد التنفيذ؟", code_snippet:"let num = '5';\nnum = +num;", options:[{text:"5",correct:true},{text:"'5'",correct:false},{text:"NaN",correct:false},{text:"undefined",correct:false}], hint:"+ قبل المتغير يحوله إلى رقم إذا أمكن.", type:"convert"},
+  {id:38, question_text:"ما ناتج console.log(!!0)؟", code_snippet:"", options:[{text:"true",correct:false},{text:"false",correct:true},{text:"0",correct:false},{text:"undefined",correct:false}], hint:"0 يعتبر false في JavaScript.", type:"convert"},
+  {id:39, question_text:"ما ناتج console.log(!!'')؟", code_snippet:"", options:[{text:"true",correct:false},{text:"false",correct:true},{text:"undefined",correct:false},{text:"''",correct:false}], hint:"النص الفارغ يعتبر false في JavaScript.", type:"convert"},
+  {id:40, question_text:"ما هو الناتج؟", code_snippet:"console.log(1 == true);", options:[{text:"true",correct:true},{text:"false",correct:false},{text:"undefined",correct:false},{text:"error",correct:false}], hint:"true يتم تحويله إلى 1 عند المقارنة باستخدام ==.", type:"compare"}
+];
+
+const quiz = document.getElementById('quiz');
+const progress = document.getElementById('progress');
+
+questions.forEach((q, i) => {
+  const card = document.createElement('div');
+  card.className = `q-card ${q.type}-card`;
+  
+  card.innerHTML = `
+    <div class="q-num">${q.id}</div>
+    <div class="question">${q.question_text}</div>
+    ${q.code_snippet ? `<div class="code-box">${q.code_snippet}</div>` : ''}
+    <div class="options"></div>
+    <button class="show-hint">إظهار التلميح</button>
+    <div class="hint">${q.hint}</div>
+  `;
+
+  const opts = card.querySelector('.options');
+  q.options.forEach(o => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.textContent = o.text;
+    div.onclick = () => {
+      div.classList.add(o.correct ? 'correct' : 'wrong');
+    };
+    opts.appendChild(div);
+  });
+
+  card.querySelector('.show-hint').onclick = () => {
+    const h = card.querySelector('.hint');
+    h.style.display = h.style.display === 'block' ? 'none' : 'block';
+  };
+
+  quiz.appendChild(card);
+  setTimeout(() => {
+    card.classList.add('show');
+  }, i * 150);
+});
+
+window.addEventListener('scroll', () => {
+  const cards = document.querySelectorAll('.q-card');
+  let current = 1;
+  cards.forEach((c, i) => {
+    if (c.getBoundingClientRect().top < window.innerHeight / 2) {
+      current = i + 1;
+    }
+  });
+  progress.textContent = `السؤال ${current} / 40`;
+});
+
+let totalSeconds = 40 * 60;
+const timerEl = document.getElementById('timer');
+
+function updateTimer() {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  timerEl.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  
+  if (totalSeconds < 600) {
+    timerEl.style.background = '#c0392b';
+    timerEl.style.color = 'white';
+  } else if (totalSeconds < 1800) {
+    timerEl.style.background = '#fdbb2d';
+    timerEl.style.color = '#000';
+  } else {
+    timerEl.style.background = '#27ae60';
+    timerEl.style.color = 'white';
+  }
+  
+  if (totalSeconds <= 0) {
+    alert('انتهى زمن الاختبار');
+    clearInterval(timerInterval);
+  }
+  totalSeconds--;
+}
+
+updateTimer();
+const timerInterval = setInterval(updateTimer, 1000);
+</script>
+</body>
+</html>
